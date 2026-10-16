@@ -1,1 +1,421 @@
-<h1>It works</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hollis &amp; Pine Cabinet Supply — RTA Kitchen Cabinets</title>
+  <meta name="description" content="Demo storefront: a fictional RTA cabinet shop showing how the NuKitchen 3D designer embeds on a retailer's site.">
+  <!-- DEMO SITE. Hollis & Pine is a made-up shop; nothing here is for sale. -->
+  <style>
+    :root {
+      --ink: #1f2a26;
+      --muted: #5d6b65;
+      --line: #e3e0d8;
+      --paper: #faf8f4;
+      --card: #ffffff;
+      --pine: #2f5d4e;
+      --pine-dark: #234a3e;
+      --brass: #b8893b;
+      --radius: 10px;
+      --wrap: 1120px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    a { color: inherit; }
+    img, svg { display: block; max-width: 100%; }
+    .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 16px; }
+    h1, h2, h3 { line-height: 1.2; margin: 0 0 .5em; font-family: Georgia, "Times New Roman", serif; font-weight: 600; }
+    h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+    .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; color: var(--brass); font-weight: 700; margin: 0 0 .5em; }
+    .btn {
+      display: inline-block; padding: .8em 1.4em; border-radius: 999px; border: 0;
+      background: var(--pine); color: #fff; font: inherit; font-weight: 600;
+      text-decoration: none; cursor: pointer;
+    }
+    .btn:hover { background: var(--pine-dark); }
+    .btn.ghost { background: transparent; color: var(--pine); box-shadow: inset 0 0 0 2px var(--pine); }
+    .btn.ghost:hover { background: var(--pine); color: #fff; }
+
+    /* Demo ribbon */
+    .demo-bar { background: #fff4d6; color: #6b4e12; font-size: .85rem; text-align: center; padding: 6px 16px; }
+
+    /* Header */
+    header { background: var(--card); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 20; }
+    .head { display: flex; align-items: center; gap: 24px; height: 64px; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: Georgia, serif; font-size: 1.2rem; font-weight: 700; white-space: nowrap; }
+    .logo-mark { width: 30px; height: 30px; }
+    nav { display: flex; gap: 22px; margin-left: auto; }
+    nav a { text-decoration: none; color: var(--muted); font-weight: 500; }
+    nav a:hover { color: var(--ink); }
+    nav a.hot { color: var(--pine); font-weight: 700; }
+    .cart-btn { background: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font: inherit; cursor: pointer; white-space: nowrap; }
+    .cart-count { display: inline-block; min-width: 1.5em; padding: 0 .4em; margin-left: 4px; border-radius: 999px; background: var(--pine); color: #fff; font-size: .8rem; text-align: center; }
+    @media (max-width: 760px) {
+      .head { height: auto; flex-wrap: wrap; padding: 10px 0; gap: 10px; }
+      nav { order: 3; width: 100%; margin: 0; gap: 16px; overflow-x: auto; padding-bottom: 2px; font-size: .92rem; }
+      .cart-btn { margin-left: auto; }
+    }
+
+    /* Hero */
+    .hero { background: linear-gradient(120deg, #e9efe9 0%, #f5efe3 100%); border-bottom: 1px solid var(--line); }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; padding: 64px 16px; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.1rem); }
+    .hero p.lead { font-size: 1.12rem; color: var(--muted); max-width: 34em; }
+    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin: 24px 0 18px; }
+    .perks { display: flex; flex-wrap: wrap; gap: 8px 20px; padding: 0; margin: 0; list-style: none; font-size: .92rem; color: var(--muted); }
+    .perks li::before { content: "✓ "; color: var(--pine); font-weight: 700; }
+    .hero-art { border-radius: 14px; overflow: hidden; box-shadow: 0 20px 40px -20px rgba(31,42,38,.35); }
+    @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; padding: 40px 16px; } }
+
+    section { padding: 64px 0; }
+    .section-head { max-width: 40em; margin-bottom: 28px; }
+    .section-head p { color: var(--muted); margin: 0; }
+
+    /* Cabinet lines */
+    .lines { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+    .line-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
+    .line-card .swatch { aspect-ratio: 4 / 3; display: grid; place-items: center; }
+    .line-card .swatch svg { height: 78%; width: auto; filter: drop-shadow(0 6px 8px rgba(0,0,0,.18)); }
+    .line-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+    .line-body h3 { font-size: 1.2rem; margin: 0; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { font-size: .75rem; padding: 2px 8px; border-radius: 999px; background: #f0ede6; color: var(--muted); }
+    .line-body p { margin: 4px 0 0; color: var(--muted); font-size: .92rem; }
+    .price { margin-top: auto; padding-top: 12px; display: flex; justify-content: space-between; align-items: baseline; border-top: 1px dashed var(--line); }
+    .price strong { font-size: 1.15rem; }
+    .price small { color: var(--muted); }
+
+    /* Design section */
+    .design { background: var(--ink); color: #eef1ee; }
+    .design .eyebrow { color: #e0b45f; }
+    .design .section-head p { color: #b9c4bf; }
+    .design-grid { display: grid; grid-template-columns: 1fr 300px; gap: 28px; align-items: start; }
+    .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; counter-reset: s; }
+    .steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 10px; font-size: .95rem; color: #cfd8d4; }
+    .steps li::before { content: counter(s); width: 30px; height: 30px; border-radius: 50%; background: #e0b45f; color: var(--ink); font-weight: 700; display: grid; place-items: center; }
+    .steps strong { color: #fff; display: block; }
+    .aside-note { margin-top: 22px; font-size: .85rem; color: #93a29b; }
+    @media (max-width: 900px) { .design-grid { grid-template-columns: 1fr; } }
+
+    /* NuKitchen host + preview placeholder (styles for nukitchen-embed.js) */
+    .nk-host { border-radius: 14px; overflow: hidden; background: #111614; min-height: 460px; box-shadow: 0 0 0 1px #34413c; }
+    .nk-ph { position: relative; min-height: 460px; display: grid; place-items: center; padding: 48px 20px 24px; text-align: center; }
+    .nk-ph-grid { position: absolute; inset: 0; opacity: .5;
+      background-image: linear-gradient(#26302c 1px, transparent 1px), linear-gradient(90deg, #26302c 1px, transparent 1px);
+      background-size: 32px 32px; }
+    .nk-ph-badge { position: absolute; top: 14px; left: 14px; z-index: 1; font-size: .72rem; font-weight: 700; letter-spacing: .08em;
+      background: #ff4747; color: #fff; padding: 4px 10px; border-radius: 4px; }
+    .nk-ph-body { position: relative; max-width: 30em; display: grid; gap: 12px; justify-items: center; }
+    .nk-ph-title { font-size: 1.35rem; color: #fff; font-family: Georgia, serif; }
+    .nk-ph-body p { margin: 0; color: #b9c4bf; font-size: .95rem; }
+    .nk-ph-btn { margin-top: 6px; padding: .8em 1.4em; border-radius: 999px; border: 0; background: #e0b45f; color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; }
+    .nk-ph-btn:hover { background: #ecc679; }
+    .nk-ph-log { font: .8rem/1.4 ui-monospace, Consolas, monospace; color: #8fd3b5; }
+
+    /* Why us */
+    .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+    .why div { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+    .why h3 { font-size: 1.05rem; }
+    .why p { margin: 0; color: var(--muted); font-size: .92rem; }
+
+    footer { border-top: 1px solid var(--line); padding: 32px 0; color: var(--muted); font-size: .88rem; }
+    .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+    /* Cart drawer */
+    .drawer-bg { position: fixed; inset: 0; background: rgba(15,20,18,.45); opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 40; }
+    .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 100%); background: var(--card); z-index: 41;
+      transform: translateX(100%); transition: transform .25s; display: flex; flex-direction: column; }
+    body.cart-open .drawer { transform: none; }
+    body.cart-open .drawer-bg { opacity: 1; pointer-events: auto; }
+    .drawer-head { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+    .drawer-head h3 { margin: 0; }
+    .x { background: none; border: 0; font-size: 1.6rem; line-height: 1; cursor: pointer; color: var(--muted); }
+    .drawer-body { flex: 1; overflow-y: auto; padding: 8px 20px; }
+    .drawer-body .empty { color: var(--muted); padding: 24px 0; }
+    .cart-src { font-size: .8rem; color: var(--pine); background: #e9f1ed; padding: 6px 10px; border-radius: 6px; margin: 8px 0; }
+    .cart-row { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: .92rem; }
+    .cart-row small { color: var(--muted); }
+    .cart-row .amt { text-align: right; font-weight: 600; }
+    .drawer-foot { padding: 16px 20px; border-top: 1px solid var(--line); display: grid; gap: 10px; }
+    .total { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="demo-bar">Demo storefront — Hollis &amp; Pine is a fictional shop built to show how the NuKitchen designer embeds on a retailer’s site. Nothing here is for sale.</div>
+
+  <header>
+    <div class="wrap head">
+      <a class="logo" href="#top">
+        <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="4" width="28" height="24" rx="3" fill="#2f5d4e"/><rect x="6" y="8" width="9" height="16" rx="1" fill="none" stroke="#e0b45f" stroke-width="2"/><rect x="17" y="8" width="9" height="16" rx="1" fill="none" stroke="#e0b45f" stroke-width="2"/></svg>
+        Hollis &amp; Pine
+      </a>
+      <nav aria-label="Main">
+        <a href="#lines">Cabinet Lines</a>
+        <a href="#design" class="hot">Design Your Kitchen</a>
+        <a href="#why">Why RTA</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="cart-btn" type="button" id="cartBtn" aria-label="Open cart">Cart <span class="cart-count" id="cartCount">0</span></button>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Ready-to-assemble kitchen cabinets</p>
+          <h1>Solid-wood cabinets, shipped flat, built to last.</h1>
+          <p class="lead">Plywood boxes, dovetail drawers and soft-close everything — at up to 50% below showroom prices. Design your kitchen in 3D, send it to the cart, and it ships in 3–5 business days.</p>
+          <div class="hero-cta">
+            <a class="btn" href="#design">Design Your Kitchen in 3D</a>
+            <a class="btn ghost" href="#lines">Shop Cabinet Lines</a>
+          </div>
+          <ul class="perks">
+            <li>Free shipping over $2,500</li>
+            <li>Free door samples</li>
+            <li>Lifetime box warranty</li>
+          </ul>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <!-- Illustrated kitchen elevation -->
+          <svg viewBox="0 0 560 380">
+            <rect width="560" height="380" fill="#f3efe6"/>
+            <rect y="300" width="560" height="80" fill="#d9cdb6"/>
+            <rect x="0" y="170" width="560" height="10" fill="#e7e1d4"/>
+            <!-- wall cabinets -->
+            <g fill="#fbfaf7" stroke="#c9c2b3" stroke-width="2">
+              <rect x="30" y="30" width="110" height="120"/><rect x="140" y="30" width="110" height="120"/>
+              <rect x="350" y="30" width="90" height="120"/><rect x="440" y="30" width="90" height="120"/>
+            </g>
+            <g fill="none" stroke="#ddd6c7" stroke-width="2">
+              <rect x="40" y="40" width="90" height="100"/><rect x="150" y="40" width="90" height="100"/>
+              <rect x="360" y="40" width="70" height="100"/><rect x="450" y="40" width="70" height="100"/>
+            </g>
+            <!-- window -->
+            <rect x="268" y="40" width="64" height="100" fill="#cfe2e6" stroke="#c9c2b3" stroke-width="4"/>
+            <!-- counter -->
+            <rect x="20" y="196" width="520" height="12" fill="#6e7a76"/>
+            <!-- base cabinets -->
+            <g fill="#2f5d4e" stroke="#244a3e" stroke-width="2">
+              <rect x="30" y="208" width="100" height="92"/><rect x="130" y="208" width="100" height="92"/>
+              <rect x="230" y="208" width="120" height="92"/><rect x="350" y="208" width="90" height="92"/>
+              <rect x="440" y="208" width="90" height="92"/>
+            </g>
+            <g fill="none" stroke="#3f7464" stroke-width="2">
+              <rect x="40" y="218" width="80" height="72"/><rect x="140" y="218" width="80" height="72"/>
+              <rect x="240" y="218" width="100" height="72"/><rect x="360" y="218" width="70" height="20"/>
+              <rect x="360" y="244" width="70" height="20"/><rect x="360" y="270" width="70" height="20"/>
+              <rect x="450" y="218" width="70" height="72"/>
+            </g>
+            <g fill="#e0b45f">
+              <rect x="114" y="230" width="3" height="18"/><rect x="143" y="230" width="3" height="18"/>
+              <rect x="388" y="226" width="14" height="3"/><rect x="388" y="252" width="14" height="3"/><rect x="388" y="278" width="14" height="3"/>
+              <rect x="508" y="230" width="3" height="18"/>
+            </g>
+            <path d="M292 196 v-20 q0-10 10-10 h10" stroke="#8b958f" stroke-width="4" fill="none"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <section id="lines">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Our cabinet lines</p>
+          <h2>Four lines. Every one in stock.</h2>
+          <p>All lines use ¾" furniture-grade plywood boxes, full-extension soft-close drawers and hidden soft-close hinges. Prices shown for a standard 10×10 kitchen and a 30" base cabinet.</p>
+        </div>
+        <div class="lines" id="lineGrid"></div>
+      </div>
+    </section>
+
+    <section id="design" class="design">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Free 3D kitchen designer</p>
+          <h2>Design your kitchen — then buy the exact parts list.</h2>
+          <p>Draw your room, place cabinets from any Hollis &amp; Pine line, and see it in 3D. When it looks right, one click sends every cabinet, filler and toe kick to your cart.</p>
+        </div>
+        <div class="design-grid">
+          <!-- ▼ THE EMBED. A retailer installs the designer with this div + the script below. -->
+          <div id="nk-designer"></div>
+          <!-- ▲ -->
+          <div>
+            <ol class="steps">
+              <li><div><strong>Draw your room</strong>Walls, windows and doors in inches.</div></li>
+              <li><div><strong>Pick a line</strong>Every door style and finish we sell is in the designer.</div></li>
+              <li><div><strong>Place cabinets</strong>Snap to walls, with clearance checks as you go.</div></li>
+              <li><div><strong>Add to cart</strong>Your exact parts list, priced at today’s prices.</div></li>
+            </ol>
+            <p class="aside-note">Prefer a human? Our designers will turn your measurements into a free 3D plan within 48 hours.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="why">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Why RTA</p>
+          <h2>Showroom quality, without the showroom markup.</h2>
+        </div>
+        <div class="why">
+          <div><h3>Assembles in 15 minutes</h3><p>Cam-lock boxes, pre-drilled hardware and a video guide for every cabinet.</p></div>
+          <div><h3>Ships in 3–5 days</h3><p>Packed flat, insured, and delivered to your curb — no 10-week wait.</p></div>
+          <div><h3>Real wood</h3><p>Solid hardwood doors and face frames. No particleboard, ever.</p></div>
+          <div><h3>Contractor pricing</h3><p>Trade accounts get an extra 10% off and a dedicated rep.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="wrap foot">
+      <div><strong>Hollis &amp; Pine Cabinet Supply</strong> · Demo storefront for the NuKitchen embed</div>
+      <div>(555) 014-2290 · hello@hollisandpine.example</div>
+    </div>
+  </footer>
+
+  <!-- Cart drawer -->
+  <div class="drawer-bg" id="drawerBg"></div>
+  <aside class="drawer" id="drawer" aria-label="Cart">
+    <div class="drawer-head"><h3>Your cart</h3><button class="x" type="button" id="cartClose" aria-label="Close cart">×</button></div>
+    <div class="drawer-body" id="cartBody"></div>
+    <div class="drawer-foot">
+      <div class="total"><span>Subtotal</span><span id="cartTotal">$0.00</span></div>
+      <button class="btn" type="button" disabled title="Demo store — checkout is disabled">Checkout (demo)</button>
+    </div>
+  </aside>
+
+  <script src="nukitchen-embed.js"></script>
+  <script>
+    // ---------- The shop's catalog (what a retailer's backend would provide) ----------
+    // Retailer SKU = line prefix + the industry-standard cabinet code. `code` is
+    // the generic code NuKitchen's catalog speaks (B30, W3030, SB36 …), which is
+    // how the designer maps a shop's products onto its 3D models.
+    var BASE_PRICES = {
+      B12: 198, B15: 228, B18: 246, B24: 279, B30: 312, B36: 344, SB36: 318, DB18: 409,
+      W1230: 152, W1530: 176, W1830: 189, W2430: 214, W3030: 243, W3630: 268,
+      T1884: 689, BF3: 34, WF330: 31, TK8: 29
+    };
+    var NAMES = {
+      B12: '12" Base', B15: '15" Base', B18: '18" Base', B24: '24" Base', B30: '30" Base', B36: '36" Base',
+      SB36: '36" Sink Base', DB18: '18" 3-Drawer Base', W1230: '12"×30" Wall', W1530: '15"×30" Wall',
+      W1830: '18"×30" Wall', W2430: '24"×30" Wall', W3030: '30"×30" Wall', W3630: '36"×30" Wall',
+      T1884: '18"×84" Pantry', BF3: '3" Base Filler', WF330: '3"×30" Wall Filler', TK8: '8 ft Toe Kick'
+    };
+    var LINES = [
+      { id: 'AS', name: 'Aspen White Shaker', door: 'shaker', finish: 'Painted white', factor: 1.00,
+        construction: 'Face frame', blurb: 'Our best seller. A clean five-piece shaker door in a durable catalyzed white.', color: '#f7f5ef', bg: '#e8e4da' },
+      { id: 'HN', name: 'Harbor Navy Shaker', door: 'shaker', finish: 'Painted navy', factor: 1.08,
+        construction: 'Face frame', blurb: 'Deep navy shaker for islands and statement walls. Pairs with brass pulls.', color: '#2c3d57', bg: '#d7dce4' },
+      { id: 'SC', name: 'Sedona Cinnamon', door: 'raised', finish: 'Maple, cinnamon glaze', factor: 1.05,
+        construction: 'Face frame', blurb: 'Traditional cathedral raised-panel door in stained solid maple with a hand-wiped glaze.', color: '#9a5a33', bg: '#eadfd3' },
+      { id: 'LG', name: 'Linea Graphite Slab', door: 'slab', finish: 'Matte graphite', factor: 0.93,
+        construction: 'Frameless (European)', blurb: 'Flat slab doors, full-overlay frameless boxes — modern and handle-friendly.', color: '#4a4d50', bg: '#dfe0df' }
+    ];
+    function price(line, code) { return Math.round(BASE_PRICES[code] * line.factor * 100) / 100; }
+    function tenByTen(line) {
+      var kit = ['SB36','B30','B24','DB18','B15','W3030','W3630','W2430','W2430','W1530','BF3','WF330','TK8','TK8'];
+      return kit.reduce(function (s, c) { return s + price(line, c); }, 0);
+    }
+    var CATALOG = {
+      currency: 'USD',
+      lines: LINES.map(function (l) {
+        return {
+          id: l.id, name: l.name, doorStyle: l.door, finish: l.finish, construction: l.construction,
+          skus: Object.keys(BASE_PRICES).map(function (code) {
+            return { sku: l.id + '-' + code, code: code, name: NAMES[code], price: price(l, code) };
+          })
+        };
+      })
+    };
+
+    // ---------- Render cabinet lines ----------
+    function doorSvg(style, color) {
+      var stroke = 'rgba(0,0,0,.18)', hi = 'rgba(255,255,255,.18)';
+      var inner = '';
+      if (style === 'shaker') inner = '<rect x="14" y="14" width="72" height="132" fill="none" stroke="' + stroke + '" stroke-width="3"/><rect x="16" y="16" width="68" height="128" fill="none" stroke="' + hi + '" stroke-width="1"/>';
+      if (style === 'raised') inner = '<path d="M14 40 Q50 14 86 40 V146 H14 Z" fill="none" stroke="' + stroke + '" stroke-width="3"/><path d="M24 50 Q50 30 76 50 V136 H24 Z" fill="' + hi + '" stroke="' + stroke + '" stroke-width="1.5"/>';
+      return '<svg viewBox="0 0 100 160" aria-hidden="true"><rect width="100" height="160" rx="2" fill="' + color + '"/>' + inner +
+        '<rect x="80" y="70" width="4" height="22" rx="2" fill="#b8893b"/></svg>';
+    }
+    function money(n) { return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+    function moneyShort(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+    var DOOR_LABEL = { shaker: 'Shaker', raised: 'Raised panel', slab: 'Flat slab' };
+
+    document.getElementById('lineGrid').innerHTML = LINES.map(function (l) {
+      return '<article class="line-card">' +
+        '<div class="swatch" style="background:' + l.bg + '">' + doorSvg(l.door, l.color) + '</div>' +
+        '<div class="line-body"><h3>' + l.name + '</h3>' +
+        '<div class="tag-row"><span class="tag">' + DOOR_LABEL[l.door] + '</span><span class="tag">' + l.finish + '</span><span class="tag">' + l.construction + '</span></div>' +
+        '<p>' + l.blurb + '</p>' +
+        '<div class="price"><div><small>10×10 kitchen from</small><br><strong>' + moneyShort(tenByTen(l)) + '</strong></div>' +
+        '<div style="text-align:right"><small>30" base</small><br><strong>' + money(price(l, 'B30')) + '</strong></div></div>' +
+        '</div></article>';
+    }).join('');
+
+    // ---------- Cart ----------
+    var cart = [];   // { sku, name, qty, unitPrice, fromDesign }
+    function addLines(lines, fromDesign) {
+      lines.forEach(function (ln) {
+        var hit = cart.find(function (c) { return c.sku === ln.sku; });
+        if (hit) hit.qty += ln.qty; else cart.push({ sku: ln.sku, name: ln.name, qty: ln.qty, unitPrice: ln.unitPrice, fromDesign: fromDesign });
+      });
+      renderCart(fromDesign);
+    }
+    function renderCart(designName) {
+      var count = cart.reduce(function (s, c) { return s + c.qty; }, 0);
+      var total = cart.reduce(function (s, c) { return s + c.qty * c.unitPrice; }, 0);
+      document.getElementById('cartCount').textContent = count;
+      document.getElementById('cartTotal').textContent = money(total);
+      var body = document.getElementById('cartBody');
+      if (!cart.length) { body.innerHTML = '<p class="empty">Your cart is empty. Try designing a kitchen.</p>'; return; }
+      body.innerHTML = (designName ? '<div class="cart-src">Added from your 3D design: ' + designName + '</div>' : '') +
+        cart.map(function (c) {
+          return '<div class="cart-row"><span>' + c.name + '</span><span class="amt">' + money(c.qty * c.unitPrice) + '</span>' +
+            '<small>' + c.sku + ' · qty ' + c.qty + ' × ' + money(c.unitPrice) + '</small></div>';
+        }).join('');
+    }
+    function openCart(open) { document.body.classList.toggle('cart-open', open); }
+    document.getElementById('cartBtn').onclick = function () { openCart(true); };
+    document.getElementById('cartClose').onclick = function () { openCart(false); };
+    document.getElementById('drawerBg').onclick = function () { openCart(false); };
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') openCart(false); });
+    renderCart();
+
+    // ---------- The embed ----------
+    // Placeholder mode: there is no appUrl yet because the live app can't be
+    // framed. When NuKitchen ships an embed build, set appUrl and delete
+    // sampleOrder — nothing else on this page changes.
+    NuKitchen.mount('#nk-designer', {
+      retailer: 'hollis-and-pine',
+      appUrl: null, // e.g. 'https://embed.nukitchen.app/?v=1'
+      height: 720,
+      catalog: CATALOG,
+      onAddToCart: function (order) {
+        addLines(order.lines, order.name || 'My Kitchen');
+        openCart(true);
+      },
+      // Stand-in for what the designer would send: a 10×10 L-shape in Aspen White.
+      sampleOrder: function () {
+        var aspen = CATALOG.lines[0];
+        var qty = { SB36: 1, B30: 1, B24: 1, DB18: 1, B15: 1, W3030: 1, W3630: 1, W2430: 2, W1530: 1, BF3: 1, WF330: 1, TK8: 2 };
+        return {
+          designId: 'demo-' + Date.now(),
+          name: '10×10 L-shape · Aspen White Shaker',
+          lines: aspen.skus.filter(function (s) { return qty[s.code]; }).map(function (s) {
+            return { sku: s.sku, name: aspen.name + ' — ' + s.name, qty: qty[s.code], unitPrice: s.price };
+          })
+        };
+      }
+    });
+  </script>
+</body>
+</html>
