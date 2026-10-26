@@ -1,0 +1,8 @@
+{
+	"core": "WordPress/WordPress#7.1.3",
+	"themes": [ "./wordpress/hollis-pine" ],
+	"plugins": [],
+	"lifecycleScripts": {
+		"afterStart": "npx wp-env run cli wp theme activate hollis-pine"
+	}
+}
