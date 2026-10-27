@@ -5,9 +5,9 @@
 // the generic code NuKitchen's catalog speaks (B30, W3030, SB36 …), which is
 // how the designer maps a shop's products onto its 3D models.
 var BASE_PRICES = {
-  B12: 198, B15: 228, B18: 246, B24: 279, B30: 312, B36: 344, SB36: 318, DB18: 409,
-  W1230: 152, W1530: 176, W1830: 189, W2430: 214, W3030: 243, W3630: 268,
-  T1884: 689, BF3: 34, WF330: 31, TK8: 29
+  B12: 233, B15: 255, B18: 276, B24: 320, B30: 363, B36: 406, SB36: 356, DB18: 371,
+  W1230: 121, W1530: 139, W1830: 156, W2430: 191, W3030: 226, W3630: 261,
+  T1884: 457, BF3: 35, WF330: 35, TK8: 35
 };
 var NAMES = {
   B12: '12" Base', B15: '15" Base', B18: '18" Base', B24: '24" Base', B30: '30" Base', B36: '36" Base',
