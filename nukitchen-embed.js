@@ -14,8 +14,9 @@
  *       catalog:  { currency: 'USD', lines: [...] },
  *       onAddToCart(order) { ... },                  // the designer's "Add to cart"
  *       onDesignSaved(design) { ... },               // optional
- *       launcher: { image, label },                  // optional: a picture + button in the page;
- *     });                                            //   the designer opens full screen on click
+ *       launcher: { image, label, title },           // optional: a picture + button in the page;
+ *     });                                            //   the designer opens full screen on click,
+ *                                                    //   `title` (the store's name) heads its bar
  *   </script>
  *
  * Message protocol (window.postMessage, JSON objects, origin-checked both ways):
@@ -101,8 +102,11 @@
     '.nk-launch:focus-visible{outline:3px solid #fff;outline-offset:-6px}' +
     '.nk-overlay{position:fixed;inset:0;z-index:2147483000;display:flex;flex-direction:column;background:#111614}' +
     '.nk-overlay[hidden]{display:none}' +
-    '.nk-overlay-bar{flex:none;display:flex;justify-content:flex-end;padding:6px 8px;background:#111614}' +
-    '.nk-overlay-close{width:36px;height:36px;border:0;border-radius:8px;background:rgba(255,255,255,.1);color:#fff;font-size:20px;line-height:1;cursor:pointer}' +
+    '.nk-overlay-bar{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 8px 6px 20px;background:#111614;color:#fff}' +
+    '.nk-overlay-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;font-size:15px}' +
+    '.nk-overlay-title span{font-weight:400;color:rgba(255,255,255,.65)}' +
+    '.nk-overlay-close{flex:none;display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px 0 14px;border:0;border-radius:8px;background:rgba(255,255,255,.1);color:#fff;font:inherit;font-size:14px;font-weight:600;line-height:1;cursor:pointer}' +
+    '.nk-overlay-close b{font-size:18px;font-weight:400}' +
     '.nk-overlay-close:hover{background:rgba(255,255,255,.2)}' +
     '.nk-overlay iframe{flex:1;min-height:0}' +
     'html.nk-open{overflow:hidden}';
@@ -135,10 +139,17 @@
     }
     function open() {
       if (!overlay) {
-        var x = el('button', { type: 'button', class: 'nk-overlay-close', 'aria-label': 'Close the designer', title: 'Close', text: '✕' });
+        // The bar says whose designer this is and how to get back to the store; a lone ✕
+        // over a black band read as empty space (owner, 2026-10-27).
+        var x = el('button', { type: 'button', class: 'nk-overlay-close', 'aria-label': 'Close the designer', title: 'Close (Esc)' },
+          [el('span', { text: 'Close' }), el('b', { 'aria-hidden': 'true', text: '✕' })]);
         x.addEventListener('click', close);
+        var title = el('div', { class: 'nk-overlay-title' }, [
+          opts.launcher.title ? document.createTextNode(opts.launcher.title + ' · ') : null,
+          el('span', { text: 'Kitchen designer' })
+        ]);
         overlay = el('div', { class: 'nk-overlay', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Kitchen designer' },
-          [el('div', { class: 'nk-overlay-bar' }, [x])]);
+          [el('div', { class: 'nk-overlay-bar' }, [title, x])]);
         document.body.appendChild(overlay);
         live = mountLive(overlay, Object.assign({}, opts, {
           fill: true,

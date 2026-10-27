@@ -53,6 +53,7 @@ add_shortcode( 'nukitchen', function () {
 		'launcher' => 'launcher' === $s['display'] ? array(
 			'image' => apply_filters( 'nukitchen_launcher_image', plugin_dir_url( __FILE__ ) . 'assets/kitchen.webp' ),
 			'label' => $s['label'],
+			'title' => get_bloginfo( 'name' ),
 		) : null,
 		'catalog'  => apply_filters( 'nukitchen_catalog', null ),
 	) ) . ';', 'before' );

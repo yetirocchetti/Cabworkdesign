@@ -108,7 +108,7 @@ renderCart();
 NuKitchen.mount('#nk-designer', {
   retailer: 'hollis-and-pine',
   appUrl: 'https://nukitchen-3d.vercel.app/embed.html',
-  launcher: { image: 'kitchen.webp', label: 'Design your kitchen in 3D' },
+  launcher: { image: 'kitchen.webp', label: 'Design your kitchen in 3D', title: 'Hollis & Pine' },
   catalog: CATALOG,
   onAddToCart: function (order) {
     addLines(order.lines, order.name || 'My Kitchen');
