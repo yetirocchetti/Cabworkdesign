@@ -21,6 +21,8 @@ add_action( 'wp_enqueue_scripts', function () {
 		wp_enqueue_script( 'nukitchen-embed-placeholder', $uri . '/assets/nukitchen-embed.js', array(), $ver, true );
 		$deps[] = 'nukitchen-embed-placeholder';
 	}
+	wp_enqueue_script( 'hollis-pine-parts', $uri . '/assets/nukitchen-parts.js', array(), $ver, true );
+	$deps[] = 'hollis-pine-parts';
 	wp_enqueue_script( 'hollis-pine-store', $uri . '/assets/store.js', $deps, $ver, true );
 } );
 

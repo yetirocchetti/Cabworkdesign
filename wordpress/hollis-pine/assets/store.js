@@ -23,6 +23,11 @@ var LINES = [
   { id: 'LG', name: 'Linea Graphite Slab', door: 'slab', finish: 'Matte graphite', factor: 0.93,
     construction: 'Frameless (European)', blurb: 'Flat slab doors, full-overlay frameless boxes — modern and handle-friendly.', color: '#4a4d50', bg: '#dfe0df' }
 ];
+// …and every other part NuKitchen's designer can put in a cart (nukitchen-parts.js, loaded
+// first), so a design's cart is the whole design.
+if (typeof NK_PARTS === 'object') Object.keys(NK_PARTS).forEach(function (code) {
+  if (!(code in BASE_PRICES)) { BASE_PRICES[code] = NK_PARTS[code][0]; NAMES[code] = NK_PARTS[code][1]; }
+});
 function price(line, code) { return Math.round(BASE_PRICES[code] * line.factor * 100) / 100; }
 function tenByTen(line) {
   var kit = ['SB36','B30','B24','DB18','B15','W3030','W3630','W2430','W2430','W1530','BF3','WF330','TK8','TK8'];
@@ -75,7 +80,8 @@ function addLines(lines, fromDesign) {
   renderCart(fromDesign);
 }
 function renderCart(designName) {
-  var count = cart.reduce(function (s, c) { return s + c.qty; }, 0);
+  // a part sold by area (countertop, backsplash: qty in sq ft) is one item in the count
+  var count = cart.reduce(function (s, c) { return s + (Number.isInteger(c.qty) ? c.qty : 1); }, 0);
   var total = cart.reduce(function (s, c) { return s + c.qty * c.unitPrice; }, 0);
   document.getElementById('cartCount').textContent = count;
   document.getElementById('cartTotal').textContent = money(total);
@@ -84,7 +90,7 @@ function renderCart(designName) {
   body.innerHTML = (designName ? '<div class="cart-src">Added from your 3D design: ' + designName + '</div>' : '') +
     cart.map(function (c) {
       return '<div class="cart-row"><span>' + c.name + '</span><span class="amt">' + money(c.qty * c.unitPrice) + '</span>' +
-        '<small>' + c.sku + ' · qty ' + c.qty + ' × ' + money(c.unitPrice) + '</small></div>';
+        '<small>' + c.sku + ' · ' + (Number.isInteger(c.qty) ? 'qty ' + c.qty : (Math.round(c.qty * 100) / 100) + ' sq ft') + ' × ' + money(c.unitPrice) + '</small></div>';
     }).join('');
 }
 function openCart(open) { document.body.classList.toggle('cart-open', open); }
