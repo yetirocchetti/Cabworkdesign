@@ -107,6 +107,7 @@ window.HollisPine = {
   }
 };
 document.addEventListener('nukitchen:cart-add', function (e) { window.HollisPine.addToCart(e.detail); });
+window.nukitchenCatalog = CATALOG;   // what the NuKitchen plugin hands the designer
 
 // ---------- The embed ----------
 // Placeholder mode: there is no appUrl yet because the live app can't be

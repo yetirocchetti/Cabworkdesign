@@ -9,20 +9,32 @@ Demo storefront at [cabworkdesign.com](https://cabworkdesign.com): **Hollis & Pi
 
 ## WordPress version (for building the NuKitchen WordPress plugin)
 
-The same store as a WordPress theme: `wordpress/hollis-pine/`. The static site above stays as it is.
+The same store as a WordPress theme: `wordpress/hollis-pine/`, and the NuKitchen plugin: `wordpress/nukitchen/`. The static site above stays as it is.
 
-**Run it locally** (needs Docker and Node):
+**Run it locally, no Docker** (Node only; the designer from `npm run dev:web` in nukitchen-3d on :5173):
 
 ```
-npx @wordpress/env start      # http://localhost:8888, admin at /wp-admin (admin / password)
-npx @wordpress/env stop
+npx @wp-playground/cli@3.1.57 server --port=9400 --login \
+  --mount=./wordpress/hollis-pine:/wordpress/wp-content/themes/hollis-pine \
+  --mount=./wordpress/nukitchen:/wordpress/wp-content/plugins/nukitchen \
+  --blueprint=./wordpress/local-blueprint.json
 ```
 
-`.wp-env.json` installs WordPress 7.1.3 and turns the theme on. To load your plugin, add its folder to `"plugins"`, for example `"plugins": [ "../nukitchen-wp-plugin" ]`, or put it in a `.wp-env.override.json` so it stays out of this repo. Then run `npx @wordpress/env start` again.
+http://127.0.0.1:9400. The blueprint turns on the theme and the plugin and points the plugin at the local designer. Changes to the theme and plugin files show on reload; the site itself is gone when the server stops.
+
+**Or with Docker:** `npx @wordpress/env start` (http://localhost:8888, admin / password). `.wp-env.json` loads the theme and the plugin; the plugin points at the production designer.
+
+### The plugin (`wordpress/nukitchen/`)
+
+- `[nukitchen]` on any page mounts the designer there (`assets/nukitchen-embed.js`, the same host script as the static site, and `assets/nukitchen-wp.js`).
+- **Settings → NuKitchen:** store ID, designer address (default the production `embed.html`), height.
+- **Catalog:** the page sets `window.nukitchenCatalog`, or PHP returns it from the `nukitchen_catalog` filter.
+- **Cart:** "Add to cart" in the designer fires `nukitchen:cart-add` on `document`; the store's cart listens. A WooCommerce adapter is next.
+- The designer only runs inside a site on its allowlist (nukitchen-3d `src/embed/retailer.js` `EMBED_PARENTS` and `vercel.json`). Localhost is allowed in development.
 
 **Quick look in the browser, no install:** [open in WordPress Playground](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/yetirocchetti/Cabworkdesign/wordpress/wordpress/blueprint.json). It runs entirely in your tab, and changes vanish when you close it.
 
 **What a plugin hooks into:**
 - **The designer slot.** If a plugin registers the `[nukitchen]` shortcode, the "Design your kitchen" section renders it. Without one, the theme shows its own placeholder, the same one as the static site.
-- **The catalog.** `window.HollisPine.catalog`: four lines, each with SKUs such as `AS-B30` and the generic code (`B30`) that NuKitchen matches to its models.
+- **The catalog.** `window.HollisPine.catalog` (also `window.nukitchenCatalog`): four lines, each with SKUs such as `AS-B30` and the generic code (`B30`) that NuKitchen matches to its models.
 - **The cart.** Call `HollisPine.addToCart({ name, lines: [{ sku, name, qty, unitPrice }] })`, or fire `document.dispatchEvent(new CustomEvent('nukitchen:cart-add', { detail: order }))`. The cart is the theme's own demo cart, not WooCommerce.

@@ -1,0 +1,10 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"landingPage": "/",
+	"login": true,
+	"steps": [
+		{ "step": "activateTheme", "themeFolderName": "hollis-pine" },
+		{ "step": "activatePlugin", "pluginPath": "nukitchen/nukitchen.php" },
+		{ "step": "setSiteOptions", "options": { "nukitchen": { "retailer": "hollis-and-pine", "app_url": "http://localhost:5173/embed.html" } } }
+	]
+}
