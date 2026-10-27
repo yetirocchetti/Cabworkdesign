@@ -27,7 +27,8 @@ http://127.0.0.1:9400. The blueprint turns on the theme and the plugin and point
 ### The plugin (`wordpress/nukitchen/`)
 
 - `[nukitchen]` on any page mounts the designer there (`assets/nukitchen-embed.js`, the same host script as the static site, and `assets/nukitchen-wp.js`).
-- **Settings → NuKitchen:** store ID, designer address (default the production `embed.html`), height.
+- **On the page** (default): a picture of a kitchen with a "Design your kitchen in 3D" button. The designer loads only on the click and opens full screen over the page; × closes it and keeps the design, and Add to cart closes it and opens the store's cart. Or set it to show the designer itself in the page. The picture is `assets/kitchen.webp`, and the `nukitchen_launcher_image` filter swaps it.
+- **Settings → NuKitchen:** store ID, on the page, button text, designer address (default the production `embed.html`), height in the page.
 - **Catalog:** the page sets `window.nukitchenCatalog`, or PHP returns it from the `nukitchen_catalog` filter.
 - **Cart:** "Add to cart" in the designer fires `nukitchen:cart-add` on `document`; the store's cart listens. A WooCommerce adapter is next.
 - The designer only runs inside a site on its allowlist (nukitchen-3d `src/embed/retailer.js` `EMBED_PARENTS` and `vercel.json`). Localhost is allowed in development.

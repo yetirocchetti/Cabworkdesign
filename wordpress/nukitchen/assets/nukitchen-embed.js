@@ -14,7 +14,8 @@
  *       catalog:  { currency: 'USD', lines: [...] },
  *       onAddToCart(order) { ... },                  // the designer's "Add to cart"
  *       onDesignSaved(design) { ... },               // optional
- *     });
+ *       launcher: { image, label },                  // optional: a picture + button in the page;
+ *     });                                            //   the designer opens full screen on click
  *   </script>
  *
  * Message protocol (window.postMessage, JSON objects, origin-checked both ways):
@@ -66,7 +67,7 @@
       src: src.toString(),
       title: 'Kitchen designer',
       allow: 'fullscreen; clipboard-write',
-      style: 'width:100%;height:' + (opts.height || 720) + 'px;border:0;display:block;border-radius:inherit;'
+      style: 'width:100%;height:' + (opts.fill ? '100%' : (opts.height || 720) + 'px') + ';border:0;display:block;border-radius:inherit;'
     });
     host.appendChild(frame);
 
@@ -80,14 +81,80 @@
       if (!m || m.source !== SOURCE || m.v !== PROTOCOL) return;
       if (m.type === 'ready') {
         send('init', { retailer: opts.retailer, catalog: opts.catalog, parentOrigin: location.origin });
-      } else if (m.type === 'resize' && m.payload && m.payload.height > 0) {
-        frame.style.height = Math.min(Math.max(m.payload.height, 480), 1400) + 'px';
+      } else if (m.type === 'resize') {
+        if (!opts.fill && m.payload && m.payload.height > 0) frame.style.height = Math.min(Math.max(m.payload.height, 480), 1400) + 'px';
       } else {
         dispatch(opts, m.type, m.payload);
       }
     });
 
     return { send: send, frame: frame };
+  }
+
+  // Base look for the launcher and the full-screen designer. Inserted FIRST in
+  // <head>, so any rule the store writes for these classes wins.
+  var CSS =
+    '.nk-launch{position:relative;display:block;width:100%;padding:0;border:0;background:#111614;cursor:pointer;overflow:hidden;border-radius:inherit;font:inherit;color:inherit}' +
+    '.nk-launch img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;transition:transform .4s ease}' +
+    '.nk-launch:hover img{transform:scale(1.02)}' +
+    '.nk-launch-label{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);white-space:nowrap;padding:14px 26px;border-radius:999px;background:#fff;color:#14201b;font-weight:700;font-size:1.05rem;box-shadow:0 6px 24px rgba(0,0,0,.25)}' +
+    '.nk-launch:focus-visible{outline:3px solid #fff;outline-offset:-6px}' +
+    '.nk-overlay{position:fixed;inset:0;z-index:2147483000;display:flex;flex-direction:column;background:#111614}' +
+    '.nk-overlay[hidden]{display:none}' +
+    '.nk-overlay-bar{flex:none;display:flex;justify-content:flex-end;padding:6px 8px;background:#111614}' +
+    '.nk-overlay-close{width:36px;height:36px;border:0;border-radius:8px;background:rgba(255,255,255,.1);color:#fff;font-size:20px;line-height:1;cursor:pointer}' +
+    '.nk-overlay-close:hover{background:rgba(255,255,255,.2)}' +
+    '.nk-overlay iframe{flex:1;min-height:0}' +
+    'html.nk-open{overflow:hidden}';
+  function injectCss() {
+    if (document.getElementById('nk-embed-css')) return;
+    var s = el('style', { id: 'nk-embed-css' });
+    s.textContent = CSS;
+    document.head.insertBefore(s, document.head.firstChild);
+  }
+
+  // A picture and a button in the page; the designer loads only on the first
+  // click (the store's page pays nothing for it until then) and opens full
+  // screen over the page, as the app is everywhere else. Closing keeps it, so
+  // the design is there on the next open. Add to cart closes it: the store's
+  // cart is what the shopper wants to see next.
+  function mountLauncher(host, opts) {
+    injectCss();
+    var label = opts.launcher.label || 'Design your kitchen in 3D';
+    var launch = el('button', { type: 'button', class: 'nk-launch' }, [
+      opts.launcher.image ? el('img', { src: opts.launcher.image, alt: '', loading: 'lazy' }) : null,
+      el('span', { class: 'nk-launch-label', text: label })
+    ]);
+    host.appendChild(launch);
+
+    var overlay = null, live = null;
+    function close() {
+      overlay.hidden = true;
+      document.documentElement.classList.remove('nk-open');
+      launch.focus();
+    }
+    function open() {
+      if (!overlay) {
+        var x = el('button', { type: 'button', class: 'nk-overlay-close', 'aria-label': 'Close the designer', title: 'Close', text: '✕' });
+        x.addEventListener('click', close);
+        overlay = el('div', { class: 'nk-overlay', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Kitchen designer' },
+          [el('div', { class: 'nk-overlay-bar' }, [x])]);
+        document.body.appendChild(overlay);
+        live = mountLive(overlay, Object.assign({}, opts, {
+          fill: true,
+          onAddToCart: function (order) {
+            close();
+            if (typeof opts.onAddToCart === 'function') opts.onAddToCart(order);
+          }
+        }));
+      }
+      overlay.hidden = false;
+      document.documentElement.classList.add('nk-open');
+      live.frame.focus();
+    }
+    launch.addEventListener('click', open);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay && !overlay.hidden) close(); });
+    return { open: open, close: close, get frame() { return live && live.frame; } };
   }
 
   function mountPlaceholder(host, opts) {
@@ -123,7 +190,8 @@
       if (!host) throw new Error('NuKitchen.mount: no element for ' + target);
       opts = opts || {};
       host.classList.add('nk-host');
-      return opts.appUrl ? mountLive(host, opts) : mountPlaceholder(host, opts);
+      if (!opts.appUrl) return mountPlaceholder(host, opts);
+      return opts.launcher ? mountLauncher(host, opts) : mountLive(host, opts);
     }
   };
 })();

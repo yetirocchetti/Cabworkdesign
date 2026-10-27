@@ -17,6 +17,7 @@
         retailer: s.retailer,
         appUrl: s.appUrl,
         height: s.height,
+        launcher: s.launcher,
         catalog: catalog,
         onAddToCart: function (order) {
           document.dispatchEvent(new CustomEvent('nukitchen:cart-add', { detail: order }));
