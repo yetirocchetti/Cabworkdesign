@@ -391,29 +391,17 @@
     renderCart();
 
     // ---------- The embed ----------
-    // Placeholder mode: there is no appUrl yet because the live app can't be
-    // framed. When NuKitchen ships an embed build, set appUrl and delete
-    // sampleOrder — nothing else on this page changes.
+    // The designer from NuKitchen's production deploy: a picture and a button
+    // here; the designer opens full screen on click and its Add to cart lands
+    // in the cart above.
     NuKitchen.mount('#nk-designer', {
       retailer: 'hollis-and-pine',
-      appUrl: null, // e.g. 'https://embed.nukitchen.app/?v=1'
-      height: 720,
+      appUrl: 'https://nukitchen-3d.vercel.app/embed.html',
+      launcher: { image: 'kitchen.webp', label: 'Design your kitchen in 3D' },
       catalog: CATALOG,
       onAddToCart: function (order) {
         addLines(order.lines, order.name || 'My Kitchen');
         openCart(true);
-      },
-      // Stand-in for what the designer would send: a 10×10 L-shape in Aspen White.
-      sampleOrder: function () {
-        var aspen = CATALOG.lines[0];
-        var qty = { SB36: 1, B30: 1, B24: 1, DB18: 1, B15: 1, W3030: 1, W3630: 1, W2430: 2, W1530: 1, BF3: 1, WF330: 1, TK8: 2 };
-        return {
-          designId: 'demo-' + Date.now(),
-          name: '10×10 L-shape · Aspen White Shaker',
-          lines: aspen.skus.filter(function (s) { return qty[s.code]; }).map(function (s) {
-            return { sku: s.sku, name: aspen.name + ' — ' + s.name, qty: qty[s.code], unitPrice: s.price };
-          })
-        };
       }
     });
   </script>

@@ -5,7 +5,7 @@ Demo storefront at [cabworkdesign.com](https://cabworkdesign.com): **Hollis & Pi
 - `index.html`: the storefront (header, hero, four cabinet lines, the "Design Your Kitchen" section, a cart drawer).
 - `nukitchen-embed.js`: the file a retailer would paste. `NuKitchen.mount('#el', { retailer, appUrl, catalog, onAddToCart })` mounts the designer in an iframe and passes messages both ways with `postMessage`. The protocol is documented at the top of the file.
 
-**Status:** placeholder. The live app can't be framed yet (it sends `X-Frame-Options: SAMEORIGIN`, and it sits behind a password curtain), so `appUrl` is `null`. In that mode the embed shows a labelled stand-in whose "Simulate" button sends a sample parts list through the same `cart:add` path the real app would use. Once the app has an embed build, set `appUrl`.
+**Status:** live. `appUrl` is NuKitchen's production `embed.html`, in launcher mode: `kitchen.webp` with a "Design your kitchen in 3D" button, and the designer opens full screen on click. The designer only runs inside `https://cabworkdesign.com` (its allowlist), so the site must be served over HTTPS (Settings → Pages → Enforce HTTPS). Without an `appUrl`, `mount()` shows a labelled placeholder whose "Simulate" button sends a sample parts list through the same `cart:add` path.
 
 ## WordPress version (for building the NuKitchen WordPress plugin)
 
