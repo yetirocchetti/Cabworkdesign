@@ -7,13 +7,13 @@
 var BASE_PRICES = {
   B12: 233, B15: 255, B18: 276, B24: 320, B30: 363, B36: 406, SB36: 356, DB18: 371,
   W1230: 121, W1530: 139, W1830: 156, W2430: 191, W3030: 226, W3630: 261,
-  T1884: 457, BF3: 35, WF330: 35, TK8: 35
+  T1884: 457, BF3: 35, WF330: 35, TF396: 95, TK8: 35
 };
 var NAMES = {
   B12: '12" Base', B15: '15" Base', B18: '18" Base', B24: '24" Base', B30: '30" Base', B36: '36" Base',
   SB36: '36" Sink Base', DB18: '18" 3-Drawer Base', W1230: '12"×30" Wall', W1530: '15"×30" Wall',
   W1830: '18"×30" Wall', W2430: '24"×30" Wall', W3030: '30"×30" Wall', W3630: '36"×30" Wall',
-  T1884: '18"×84" Pantry', BF3: '3" Base Filler', WF330: '3"×30" Wall Filler', TK8: '8 ft Toe Kick'
+  T1884: '18"×84" Pantry', BF3: '3" Base Filler', WF330: '3"×30" Wall Filler', TF396: '3"×96" Tall Filler', TK8: '8 ft Toe Kick'
 };
 var LINES = [
   { id: 'AS', name: 'Aspen White Shaker', door: 'shaker', finish: 'Painted white', factor: 1.00,
