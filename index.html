@@ -1,305 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- GitHub Pages sends no security headers, so the page declares its own. Scripts: this
-       site's files only, no inline (store.js). Frames: the NuKitchen designer only. Styles
-       allow inline: the page's <style>, and the cabinet cards and embed set style attributes. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://nukitchen-3d.vercel.app; base-uri 'none'; form-action 'self'; object-src 'none'; upgrade-insecure-requests">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- No scripts on this page, so nothing may run. The designer lives in store/. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <title>Hollis &amp; Pine Cabinet Supply — RTA Kitchen Cabinets</title>
-  <meta name="description" content="Demo storefront: a fictional RTA cabinet shop showing how the NuKitchen 3D designer embeds on a retailer's site.">
-  <!-- DEMO SITE. Hollis & Pine is a made-up shop; nothing here is for sale. -->
-  <style>
-    :root {
-      --ink: #1f2a26;
-      --muted: #5d6b65;
-      --line: #e3e0d8;
-      --paper: #faf8f4;
-      --card: #ffffff;
-      --pine: #2f5d4e;
-      --pine-dark: #234a3e;
-      --brass: #b8893b;
-      --radius: 10px;
-      --wrap: 1120px;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    }
-    a { color: inherit; }
-    img, svg { display: block; max-width: 100%; }
-    .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 16px; }
-    h1, h2, h3 { line-height: 1.2; margin: 0 0 .5em; font-family: Georgia, "Times New Roman", serif; font-weight: 600; }
-    h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
-    .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; color: var(--brass); font-weight: 700; margin: 0 0 .5em; }
-    .btn {
-      display: inline-block; padding: .8em 1.4em; border-radius: 999px; border: 0;
-      background: var(--pine); color: #fff; font: inherit; font-weight: 600;
-      text-decoration: none; cursor: pointer;
-    }
-    .btn:hover { background: var(--pine-dark); }
-    .btn.ghost { background: transparent; color: var(--pine); box-shadow: inset 0 0 0 2px var(--pine); }
-    .btn.ghost:hover { background: var(--pine); color: #fff; }
-
-    /* Demo ribbon */
-    .demo-bar { background: #fff4d6; color: #6b4e12; font-size: .85rem; text-align: center; padding: 6px 16px; }
-
-    /* Header */
-    header { background: var(--card); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 20; }
-    .head { display: flex; align-items: center; gap: 24px; height: 64px; }
-    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: Georgia, serif; font-size: 1.2rem; font-weight: 700; white-space: nowrap; }
-    .logo-mark { width: 30px; height: 30px; }
-    nav { display: flex; gap: 22px; margin-left: auto; }
-    nav a { text-decoration: none; color: var(--muted); font-weight: 500; }
-    nav a:hover { color: var(--ink); }
-    nav a.hot { color: var(--pine); font-weight: 700; }
-    .cart-btn { background: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font: inherit; cursor: pointer; white-space: nowrap; }
-    .cart-count { display: inline-block; min-width: 1.5em; padding: 0 .4em; margin-left: 4px; border-radius: 999px; background: var(--pine); color: #fff; font-size: .8rem; text-align: center; }
-    @media (max-width: 760px) {
-      .head { height: auto; flex-wrap: wrap; padding: 10px 0; gap: 10px; }
-      nav { order: 3; width: 100%; margin: 0; gap: 16px; overflow-x: auto; padding-bottom: 2px; font-size: .92rem; }
-      .cart-btn { margin-left: auto; }
-    }
-
-    /* Hero */
-    .hero { background: linear-gradient(120deg, #e9efe9 0%, #f5efe3 100%); border-bottom: 1px solid var(--line); }
-    .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; padding: 64px 16px; }
-    .hero h1 { font-size: clamp(2rem, 5vw, 3.1rem); }
-    .hero p.lead { font-size: 1.12rem; color: var(--muted); max-width: 34em; }
-    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin: 24px 0 18px; }
-    .perks { display: flex; flex-wrap: wrap; gap: 8px 20px; padding: 0; margin: 0; list-style: none; font-size: .92rem; color: var(--muted); }
-    .perks li::before { content: "✓ "; color: var(--pine); font-weight: 700; }
-    .hero-art { border-radius: 14px; overflow: hidden; box-shadow: 0 20px 40px -20px rgba(31,42,38,.35); }
-    @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; padding: 40px 16px; } }
-
-    section { padding: 64px 0; }
-    .section-head { max-width: 40em; margin-bottom: 28px; }
-    .section-head p { color: var(--muted); margin: 0; }
-
-    /* Cabinet lines */
-    .lines { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-    .line-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
-    .line-card .swatch { aspect-ratio: 4 / 3; display: grid; place-items: center; }
-    .line-card .swatch svg { height: 78%; width: auto; filter: drop-shadow(0 6px 8px rgba(0,0,0,.18)); }
-    .line-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
-    .line-body h3 { font-size: 1.2rem; margin: 0; }
-    .tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tag { font-size: .75rem; padding: 2px 8px; border-radius: 999px; background: #f0ede6; color: var(--muted); }
-    .line-body p { margin: 4px 0 0; color: var(--muted); font-size: .92rem; }
-    .price { margin-top: auto; padding-top: 12px; display: flex; justify-content: space-between; align-items: baseline; border-top: 1px dashed var(--line); }
-    .price strong { font-size: 1.15rem; }
-    .price small { color: var(--muted); }
-
-    /* Design section */
-    .design { background: var(--ink); color: #eef1ee; }
-    .design .eyebrow { color: #e0b45f; }
-    .design .section-head p { color: #b9c4bf; }
-    .design-grid { display: grid; grid-template-columns: 1fr 300px; gap: 28px; align-items: start; }
-    .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; counter-reset: s; }
-    .steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 10px; font-size: .95rem; color: #cfd8d4; }
-    .steps li::before { content: counter(s); width: 30px; height: 30px; border-radius: 50%; background: #e0b45f; color: var(--ink); font-weight: 700; display: grid; place-items: center; }
-    .steps strong { color: #fff; display: block; }
-    .aside-note { margin-top: 22px; font-size: .85rem; color: #93a29b; }
-    @media (max-width: 900px) { .design-grid { grid-template-columns: 1fr; } }
-
-    /* NuKitchen host + preview placeholder (styles for nukitchen-embed.js) */
-    .nk-host { border-radius: 14px; overflow: hidden; background: #111614; min-height: 460px; box-shadow: 0 0 0 1px #34413c; }
-    .nk-ph { position: relative; min-height: 460px; display: grid; place-items: center; padding: 48px 20px 24px; text-align: center; }
-    .nk-ph-grid { position: absolute; inset: 0; opacity: .5;
-      background-image: linear-gradient(#26302c 1px, transparent 1px), linear-gradient(90deg, #26302c 1px, transparent 1px);
-      background-size: 32px 32px; }
-    .nk-ph-badge { position: absolute; top: 14px; left: 14px; z-index: 1; font-size: .72rem; font-weight: 700; letter-spacing: .08em;
-      background: #ff4747; color: #fff; padding: 4px 10px; border-radius: 4px; }
-    .nk-ph-body { position: relative; max-width: 30em; display: grid; gap: 12px; justify-items: center; }
-    .nk-ph-title { font-size: 1.35rem; color: #fff; font-family: Georgia, serif; }
-    .nk-ph-body p { margin: 0; color: #b9c4bf; font-size: .95rem; }
-    .nk-ph-btn { margin-top: 6px; padding: .8em 1.4em; border-radius: 999px; border: 0; background: #e0b45f; color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; }
-    .nk-ph-btn:hover { background: #ecc679; }
-    .nk-ph-log { font: .8rem/1.4 ui-monospace, Consolas, monospace; color: #8fd3b5; }
-
-    /* Why us */
-    .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-    .why div { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
-    .why h3 { font-size: 1.05rem; }
-    .why p { margin: 0; color: var(--muted); font-size: .92rem; }
-
-    footer { border-top: 1px solid var(--line); padding: 32px 0; color: var(--muted); font-size: .88rem; }
-    .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
-
-    /* Cart drawer */
-    .drawer-bg { position: fixed; inset: 0; background: rgba(15,20,18,.45); opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 40; }
-    .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 100%); background: var(--card); z-index: 41;
-      transform: translateX(100%); transition: transform .25s; display: flex; flex-direction: column; }
-    body.cart-open .drawer { transform: none; }
-    body.cart-open .drawer-bg { opacity: 1; pointer-events: auto; }
-    .drawer-head { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--line); }
-    .drawer-head h3 { margin: 0; }
-    .x { background: none; border: 0; font-size: 1.6rem; line-height: 1; cursor: pointer; color: var(--muted); }
-    .drawer-body { flex: 1; overflow-y: auto; padding: 8px 20px; }
-    .drawer-body .empty { color: var(--muted); padding: 24px 0; }
-    .cart-src { font-size: .8rem; color: var(--pine); background: #e9f1ed; padding: 6px 10px; border-radius: 6px; margin: 8px 0; }
-    .cart-row { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: .92rem; }
-    .cart-row small { color: var(--muted); }
-    .cart-row .amt { text-align: right; font-weight: 600; }
-    .drawer-foot { padding: 16px 20px; border-top: 1px solid var(--line); display: grid; gap: 10px; }
-    .total { display: flex; justify-content: space-between; font-size: 1.1rem; font-weight: 700; }
-  </style>
+  <title>SUPERULTRAKITCHEN — 3D kitchen design and quoting, in the browser</title>
+  <meta name="description" content="Design kitchens with your client in the room, and quote them before they leave. 3D, in the browser.">
+  <meta name="theme-color" content="#ece8e1">
+  <link rel="canonical" href="https://cabworkdesign.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cabworkdesign.com/">
+  <meta property="og:title" content="SUPERULTRAKITCHEN">
+  <meta property="og:description" content="Design it with them. Quote it on the spot.">
+  <meta property="og:image" content="https://cabworkdesign.com/landing/hero-wide.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" href="landing/fonts/bebasneue-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="landing/landing.css">
 </head>
 <body>
-  <div class="demo-bar">Demo storefront — Hollis &amp; Pine is a fictional shop built to show how the NuKitchen designer embeds on a retailer’s site. Nothing here is for sale.</div>
+  <section class="hero" aria-labelledby="h-hero">
+    <picture>
+      <source media="(max-aspect-ratio: 11/10)" srcset="landing/hero-tall.webp">
+      <img class="poster" src="landing/hero-wide.webp" alt="A green shaker kitchen with a marble island, designed in SUPERULTRAKITCHEN" fetchpriority="high">
+    </picture>
 
-  <header>
-    <div class="wrap head">
-      <a class="logo" href="#top">
-        <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="4" width="28" height="24" rx="3" fill="#2f5d4e"/><rect x="6" y="8" width="9" height="16" rx="1" fill="none" stroke="#e0b45f" stroke-width="2"/><rect x="17" y="8" width="9" height="16" rx="1" fill="none" stroke="#e0b45f" stroke-width="2"/></svg>
-        Hollis &amp; Pine
-      </a>
+    <header class="top">
+      <a class="logo" href="./">SUPERULTRAKITCHEN</a>
       <nav aria-label="Main">
-        <a href="#lines">Cabinet Lines</a>
-        <a href="#design" class="hot">Design Your Kitchen</a>
-        <a href="#why">Why RTA</a>
-        <a href="#contact">Contact</a>
+        <a class="link" href="#proof">What it does</a>
+        <a class="link" href="store/">Demo store</a>
+        <a class="btn" href="store/#design">Try it</a>
       </nav>
-      <button class="cart-btn" type="button" id="cartBtn" aria-label="Open cart">Cart <span class="cart-count" id="cartCount">0</span></button>
-    </div>
-  </header>
+    </header>
 
-  <main id="top">
-    <div class="hero">
-      <div class="wrap hero-grid">
-        <div>
-          <p class="eyebrow">Ready-to-assemble kitchen cabinets</p>
-          <h1>Solid-wood cabinets, shipped flat, built to last.</h1>
-          <p class="lead">Plywood boxes, dovetail drawers and soft-close everything — at up to 50% below showroom prices. Design your kitchen in 3D, send it to the cart, and it ships in 3–5 business days.</p>
-          <div class="hero-cta">
-            <a class="btn" href="#design">Design Your Kitchen in 3D</a>
-            <a class="btn ghost" href="#lines">Shop Cabinet Lines</a>
-          </div>
-          <ul class="perks">
-            <li>Free shipping over $2,500</li>
-            <li>Free door samples</li>
-            <li>Lifetime box warranty</li>
-          </ul>
-        </div>
-        <div class="hero-art" aria-hidden="true">
-          <!-- Illustrated kitchen elevation -->
-          <svg viewBox="0 0 560 380">
-            <rect width="560" height="380" fill="#f3efe6"/>
-            <rect y="300" width="560" height="80" fill="#d9cdb6"/>
-            <rect x="0" y="170" width="560" height="10" fill="#e7e1d4"/>
-            <!-- wall cabinets -->
-            <g fill="#fbfaf7" stroke="#c9c2b3" stroke-width="2">
-              <rect x="30" y="30" width="110" height="120"/><rect x="140" y="30" width="110" height="120"/>
-              <rect x="350" y="30" width="90" height="120"/><rect x="440" y="30" width="90" height="120"/>
-            </g>
-            <g fill="none" stroke="#ddd6c7" stroke-width="2">
-              <rect x="40" y="40" width="90" height="100"/><rect x="150" y="40" width="90" height="100"/>
-              <rect x="360" y="40" width="70" height="100"/><rect x="450" y="40" width="70" height="100"/>
-            </g>
-            <!-- window -->
-            <rect x="268" y="40" width="64" height="100" fill="#cfe2e6" stroke="#c9c2b3" stroke-width="4"/>
-            <!-- counter -->
-            <rect x="20" y="196" width="520" height="12" fill="#6e7a76"/>
-            <!-- base cabinets -->
-            <g fill="#2f5d4e" stroke="#244a3e" stroke-width="2">
-              <rect x="30" y="208" width="100" height="92"/><rect x="130" y="208" width="100" height="92"/>
-              <rect x="230" y="208" width="120" height="92"/><rect x="350" y="208" width="90" height="92"/>
-              <rect x="440" y="208" width="90" height="92"/>
-            </g>
-            <g fill="none" stroke="#3f7464" stroke-width="2">
-              <rect x="40" y="218" width="80" height="72"/><rect x="140" y="218" width="80" height="72"/>
-              <rect x="240" y="218" width="100" height="72"/><rect x="360" y="218" width="70" height="20"/>
-              <rect x="360" y="244" width="70" height="20"/><rect x="360" y="270" width="70" height="20"/>
-              <rect x="450" y="218" width="70" height="72"/>
-            </g>
-            <g fill="#e0b45f">
-              <rect x="114" y="230" width="3" height="18"/><rect x="143" y="230" width="3" height="18"/>
-              <rect x="388" y="226" width="14" height="3"/><rect x="388" y="252" width="14" height="3"/><rect x="388" y="278" width="14" height="3"/>
-              <rect x="508" y="230" width="3" height="18"/>
-            </g>
-            <path d="M292 196 v-20 q0-10 10-10 h10" stroke="#8b958f" stroke-width="4" fill="none"/>
-          </svg>
-        </div>
-      </div>
+    <div class="pitch">
+      <h1 id="h-hero">Design it with them.<br><em>Quote it on the spot.</em></h1>
+      <p class="line">3D kitchen design and quoting, in the browser.</p>
     </div>
+  </section>
 
-    <section id="lines">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow">Our cabinet lines</p>
-          <h2>Four lines. Every one in stock.</h2>
-          <p>All lines use ¾" furniture-grade plywood boxes, full-extension soft-close drawers and hidden soft-close hinges. Prices shown for a standard 10×10 kitchen and a 30" base cabinet.</p>
-        </div>
-        <div class="lines" id="lineGrid"></div>
-      </div>
+  <main>
+    <section class="proof" id="proof" aria-labelledby="h-proof">
+      <h2 id="h-proof">Everything a showroom does.</h2>
+      <ul class="tiles">
+        <li class="tile tile--big"><img src="landing/photo.webp" alt="" loading="lazy"><span>A whole kitchen, in a browser</span></li>
+        <li class="tile"><img src="landing/open.webp" alt="" loading="lazy"><span>Opens like the real thing</span></li>
+        <li class="tile"><img src="landing/check.webp" alt="" loading="lazy"><span>Checks every clearance</span></li>
+        <li class="tile"><img src="landing/walk.webp" alt="" loading="lazy"><span>Walk through it</span></li>
+        <li class="tile"><img src="landing/layouts-top.webp" alt="" loading="lazy"><span>Plans with every dimension</span></li>
+        <li class="tile"><img src="landing/house.webp" alt="" loading="lazy"><span>Whole houses</span></li>
+      </ul>
+      <ul class="also">
+        <li>Phone &amp; tablet</li>
+        <li>No install</li>
+        <li>Unreal &amp; Blender</li>
+        <li>On your website</li>
+      </ul>
     </section>
 
-    <section id="design" class="design">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow">Free 3D kitchen designer</p>
-          <h2>Design your kitchen — then buy the exact parts list.</h2>
-          <p>Draw your room, place cabinets from any Hollis &amp; Pine line, and see it in 3D. When it looks right, one click sends every cabinet, filler and toe kick to your cart.</p>
-        </div>
-        <div class="design-grid">
-          <!-- ▼ THE EMBED. A retailer installs the designer with this div + the script below. -->
-          <div id="nk-designer"></div>
-          <!-- ▲ -->
-          <div>
-            <ol class="steps">
-              <li><div><strong>Draw your room</strong>Walls, windows and doors in inches.</div></li>
-              <li><div><strong>Pick a line</strong>Every door style and finish we sell is in the designer.</div></li>
-              <li><div><strong>Place cabinets</strong>Snap to walls, with clearance checks as you go.</div></li>
-              <li><div><strong>Add to cart</strong>Your exact parts list, priced at today’s prices.</div></li>
-            </ol>
-            <p class="aside-note">Prefer a human? Our designers will turn your measurements into a free 3D plan within 48 hours.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="why">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow">Why RTA</p>
-          <h2>Showroom quality, without the showroom markup.</h2>
-        </div>
-        <div class="why">
-          <div><h3>Assembles in 15 minutes</h3><p>Cam-lock boxes, pre-drilled hardware and a video guide for every cabinet.</p></div>
-          <div><h3>Ships in 3–5 days</h3><p>Packed flat, insured, and delivered to your curb — no 10-week wait.</p></div>
-          <div><h3>Real wood</h3><p>Solid hardwood doors and face frames. No particleboard, ever.</p></div>
-          <div><h3>Contractor pricing</h3><p>Trade accounts get an extra 10% off and a dedicated rep.</p></div>
-        </div>
-      </div>
+    <section class="close" aria-labelledby="h-close">
+      <h2 id="h-close">See it on a store.</h2>
+      <p class="line">Hollis &amp; Pine is our demo shop, with the designer built in.</p>
+      <a class="btn btn--big" href="store/#design">Try it</a>
     </section>
   </main>
 
-  <footer id="contact">
-    <div class="wrap foot">
-      <div><strong>Hollis &amp; Pine Cabinet Supply</strong> · Demo storefront for the NuKitchen embed</div>
-      <div>(555) 014-2290 · hello@hollisandpine.example</div>
-    </div>
+  <footer class="foot">
+    <span>SUPERULTRAKITCHEN</span>
+    <a href="store/">Demo store</a>
   </footer>
-
-  <!-- Cart drawer -->
-  <div class="drawer-bg" id="drawerBg"></div>
-  <aside class="drawer" id="drawer" aria-label="Cart">
-    <div class="drawer-head"><h3>Your cart</h3><button class="x" type="button" id="cartClose" aria-label="Close cart">×</button></div>
-    <div class="drawer-body" id="cartBody"></div>
-    <div class="drawer-foot">
-      <div class="total"><span>Subtotal</span><span id="cartTotal">$0.00</span></div>
-      <button class="btn" type="button" disabled title="Demo store — checkout is disabled">Checkout (demo)</button>
-    </div>
-  </aside>
-
-  <script src="nukitchen-embed.js"></script>
-  <script src="nukitchen-parts.js"></script>
-  <script src="store.js"></script>
 </body>
 </html>

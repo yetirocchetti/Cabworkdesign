@@ -1,0 +1,143 @@
+/* The landing page. Haakon's rev 3 look (nukitchen-3d dev: src/landing/landing.css), without the
+   live 3D stage: the same poster, words and proof mosaic, in plain CSS. */
+
+@font-face {
+  font-family: 'Outfit'; font-style: normal; font-weight: 300 700; font-display: swap;
+  src: url('fonts/outfit-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Bebas Neue'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('fonts/bebasneue-latin.woff2') format('woff2');
+}
+
+:root {
+  --bg: #ece8e1;
+  --wall: #e9e0d1; /* the wall in the hero posters */
+  --white: #ffffff;
+  --ink: #2a251d;
+  --ink-soft: #443d32;
+  --dark: #1c1813;
+  --dark-line: #4a4337;
+  --accent: #c53737;
+  --accent-hover: #ae2f2f;
+  --radius: 10px;
+  --gutter: clamp(16px, 3vw, 40px);
+  --body: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --display: 'Bebas Neue', 'Outfit', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--body); -webkit-font-smoothing: antialiased;
+}
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+h1, h2 { margin: 0; font-family: var(--display); font-weight: 400; line-height: 0.95; letter-spacing: 0.01em; }
+h1 { font-size: clamp(44px, 6vw, 100px); }
+h1 em { font-style: normal; color: var(--accent); }
+h2 { font-size: clamp(36px, 4.4vw, 72px); text-align: center; }
+.line { margin: 12px 0 0; font-size: clamp(16px, 1.4vw, 20px); color: var(--ink-soft); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 11px 20px; border-radius: 999px;
+  background: var(--accent); color: var(--white);
+  font: 600 15px/1 var(--body); text-decoration: none; white-space: nowrap;
+  transition: background 0.12s, transform 0.1s;
+}
+.btn:hover { background: var(--accent-hover); }
+.btn:active { transform: scale(0.97); }
+.btn--big { padding: 16px 30px; font-size: 17px; }
+
+/* Screen one */
+.hero { position: relative; height: 100svh; min-height: 620px; overflow: hidden; background: var(--wall); }
+.poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 100% 100%; }
+
+/* Narrower than the poster: fit its width so the blank wall stays beside the words, and fade its
+   top edge into the wall colour above. */
+@media (max-aspect-ratio: 8/5) and (min-aspect-ratio: 11/10) {
+  .poster {
+    inset: auto 0 0 0; height: auto;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%);
+    mask-image: linear-gradient(to bottom, transparent, #000 14%);
+  }
+}
+/* Portrait: the words stand above the kitchen, so the poster starts below them. */
+@media (max-aspect-ratio: 11/10) {
+  .poster {
+    top: 120px; height: calc(100% - 120px); object-position: 50% 0;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%);
+    mask-image: linear-gradient(to bottom, transparent, #000 10%);
+  }
+}
+
+.top {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 16px var(--gutter);
+}
+.logo { font: 400 clamp(25px, 2.4vw, 32px)/1 var(--display); letter-spacing: 0.03em; color: var(--ink); text-decoration: none; }
+.top nav { display: flex; align-items: center; gap: clamp(12px, 2vw, 26px); }
+.link { color: var(--ink); font-size: 15px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.link:hover { color: var(--accent); }
+
+.pitch { position: absolute; z-index: 1; left: var(--gutter); top: clamp(92px, 16vh, 170px); max-width: min(640px, 46vw); }
+
+/* Screen two: the proof mosaic */
+.proof { padding: 14vh var(--gutter) 10vh; display: flex; flex-direction: column; align-items: center; gap: 36px; scroll-margin-top: 0; }
+.tiles {
+  list-style: none; margin: 0; padding: 0; width: min(1240px, 100%);
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px;
+}
+.tile { position: relative; overflow: hidden; border-radius: var(--radius); background: var(--white); }
+.tile--big { grid-column: span 2; grid-row: span 2; }
+.tile img { display: block; width: 100%; height: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 900ms cubic-bezier(.2, .7, .2, 1); }
+.tile--big img { position: absolute; inset: 0; aspect-ratio: auto; }
+.tile:hover img { transform: scale(1.045); }
+.tile span {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 16px 14px;
+  background: linear-gradient(to top, rgba(20, 16, 11, 0.72), transparent);
+  color: var(--white); font: 600 16px/1.2 var(--body);
+}
+.tile--big span { padding: 60px 22px 20px; font-size: 22px; }
+.also { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.also li { padding: 9px 16px; border-radius: 999px; background: var(--white); color: var(--ink-soft); font-size: 14px; font-weight: 600; }
+
+/* Screen three */
+.close {
+  padding: 16vh 16px 18vh; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
+  background: var(--dark); color: var(--white);
+}
+.close .line { color: #d8d1c5; margin-bottom: 22px; }
+
+.foot {
+  display: flex; justify-content: space-between; gap: 16px; padding: 18px var(--gutter);
+  background: var(--dark); border-top: 1px solid var(--dark-line); color: #d8d1c5; font-size: 14px;
+}
+.foot a { color: inherit; }
+
+/* Phone */
+@media (max-width: 820px) {
+  .hero { min-height: 560px; }
+  .top .link[href="#proof"] { display: none; }
+  .pitch { max-width: calc(100% - 32px); top: 76px; }
+  h1 { font-size: clamp(38px, 11vw, 56px); }
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .tile--big { aspect-ratio: 4 / 3; }
+  .tile span { padding: 28px 10px 10px; font-size: 14px; }
+  .tile--big span { padding: 28px 12px 12px; font-size: 17px; }
+  .tile:last-child { grid-column: span 2; }
+  .tile:last-child img { aspect-ratio: 16 / 9; }
+}
+
+@media (max-width: 360px) {
+  .top .link { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn, .tile img { transition: none; }
+  .tile:hover img { transform: none; }
+}

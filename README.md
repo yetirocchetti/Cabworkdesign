@@ -1,11 +1,12 @@
 # Cabworkdesign
 
-Demo storefront at [cabworkdesign.com](https://cabworkdesign.com): **Hollis & Pine Cabinet Supply**, a made-up RTA cabinet shop that shows how the NuKitchen 3D designer would embed on a retailer's site.
+[cabworkdesign.com](https://cabworkdesign.com) is the landing page for SUPERULTRAKITCHEN, with **Hollis & Pine Cabinet Supply**, a made-up RTA cabinet shop, under `/store/` as the live demo of the designer on a retailer's site.
 
-- `index.html`: the storefront (header, hero, four cabinet lines, the "Design Your Kitchen" section, a cart drawer).
-- `nukitchen-embed.js`: the file a retailer would paste. `NuKitchen.mount('#el', { retailer, appUrl, catalog, onAddToCart })` mounts the designer in an iframe and passes messages both ways with `postMessage`. The protocol is documented at the top of the file.
+- `index.html`, `landing/`: the landing page. Plain HTML and CSS, no JavaScript. The stills come from NuKitchen's `public/landing/` (dev branch).
+- `store/index.html`: the storefront (header, hero, four cabinet lines, the "Design Your Kitchen" section, a cart drawer).
+- `store/nukitchen-embed.js`: the file a retailer would paste. `NuKitchen.mount('#el', { retailer, appUrl, catalog, onAddToCart })` mounts the designer in an iframe and passes messages both ways with `postMessage`. The protocol is documented at the top of the file.
 
-**Status:** live. `appUrl` is NuKitchen's production `embed.html`, in launcher mode: `kitchen.webp` with a "Design your kitchen in 3D" button, and the designer opens full screen on click. The designer only runs inside `https://cabworkdesign.com` (its allowlist), so the site must be served over HTTPS (Settings → Pages → Enforce HTTPS). Without an `appUrl`, `mount()` shows a labelled placeholder whose "Simulate" button sends a sample parts list through the same `cart:add` path.
+**Status:** live. `appUrl` is NuKitchen's production `embed.html`, in launcher mode: `store/kitchen.webp` with a "Design your kitchen in 3D" button, and the designer opens full screen on click. The designer only runs inside `https://cabworkdesign.com` (its allowlist), so the site must be served over HTTPS (Settings → Pages → Enforce HTTPS). Without an `appUrl`, `mount()` shows a labelled placeholder whose "Simulate" button sends a sample parts list through the same `cart:add` path.
 
 ## WordPress version (for building the NuKitchen WordPress plugin)
 
