@@ -12,7 +12,7 @@
 
 :root {
   --bg: #ece8e1;
-  --wall: #e9e0d1; /* the wall in the hero posters */
+  --paper: #faf8f3; /* the background of the app's photo renders */
   --white: #ffffff;
   --ink: #2a251d;
   --ink-soft: #443d32;
@@ -51,27 +51,9 @@ h2 { font-size: clamp(36px, 4.4vw, 72px); text-align: center; }
 .btn:active { transform: scale(0.97); }
 .btn--big { padding: 16px 30px; font-size: 17px; }
 
-/* Screen one */
-.hero { position: relative; height: 100svh; min-height: 620px; overflow: hidden; background: var(--wall); }
-.poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 100% 100%; }
-
-/* Narrower than the poster: fit its width so the blank wall stays beside the words, and fade its
-   top edge into the wall colour above. */
-@media (max-aspect-ratio: 8/5) and (min-aspect-ratio: 11/10) {
-  .poster {
-    inset: auto 0 0 0; height: auto;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%);
-    mask-image: linear-gradient(to bottom, transparent, #000 14%);
-  }
-}
-/* Portrait: the words stand above the kitchen, so the poster starts below them. */
-@media (max-aspect-ratio: 11/10) {
-  .poster {
-    top: 120px; height: calc(100% - 120px); object-position: 50% 0;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%);
-    mask-image: linear-gradient(to bottom, transparent, #000 10%);
-  }
-}
+/* Screen one: the words on the render's own paper colour, the kitchen filling the right. */
+.hero { position: relative; min-height: 100svh; background: var(--paper); display: grid; grid-template-columns: minmax(0, 40%) minmax(0, 60%); align-items: center; }
+.poster { grid-column: 2; grid-row: 1; width: 100%; height: 100svh; min-height: 620px; object-fit: cover; object-position: 30% 50%; display: block; }
 
 .top {
   position: absolute; top: 0; left: 0; right: 0; z-index: 2;
@@ -79,11 +61,11 @@ h2 { font-size: clamp(36px, 4.4vw, 72px); text-align: center; }
   padding: 16px var(--gutter);
 }
 .logo { font: 400 clamp(25px, 2.4vw, 32px)/1 var(--display); letter-spacing: 0.03em; color: var(--ink); text-decoration: none; }
-.top nav { display: flex; align-items: center; gap: clamp(12px, 2vw, 26px); }
+.top nav { display: flex; align-items: center; gap: clamp(12px, 2vw, 26px); padding: 6px 8px 6px 16px; border-radius: 999px; background: rgba(250, 248, 243, 0.86); }
 .link { color: var(--ink); font-size: 15px; font-weight: 600; text-decoration: none; white-space: nowrap; }
 .link:hover { color: var(--accent); }
 
-.pitch { position: absolute; z-index: 1; left: var(--gutter); top: clamp(92px, 16vh, 170px); max-width: min(640px, 46vw); }
+.pitch { grid-column: 1; grid-row: 1; padding: 0 clamp(16px, 2vw, 32px) 0 var(--gutter); }
 
 /* Screen two: the proof mosaic */
 .proof { padding: 14vh var(--gutter) 10vh; display: flex; flex-direction: column; align-items: center; gap: 36px; scroll-margin-top: 0; }
@@ -120,9 +102,12 @@ h2 { font-size: clamp(36px, 4.4vw, 72px); text-align: center; }
 
 /* Phone */
 @media (max-width: 820px) {
-  .hero { min-height: 560px; }
+  .hero { display: flex; flex-direction: column; min-height: 0; }
+  br.d { display: none; }
   .top .link[href="#proof"] { display: none; }
-  .pitch { max-width: calc(100% - 32px); top: 76px; }
+  .top nav { padding: 0; background: none; }
+  .pitch { order: 1; padding: 84px 16px 22px; }
+  .poster { order: 2; height: auto; min-height: 0; aspect-ratio: 1 / 1; object-position: 30% 50%; }
   h1 { font-size: clamp(38px, 11vw, 56px); }
   .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .tile--big { aspect-ratio: 4 / 3; }

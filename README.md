@@ -2,7 +2,7 @@
 
 [cabworkdesign.com](https://cabworkdesign.com) is the landing page for SUPERULTRAKITCHEN, with **Hollis & Pine Cabinet Supply**, a made-up RTA cabinet shop, under `/store/` as the live demo of the designer on a retailer's site.
 
-- `index.html`, `landing/`: the landing page. Plain HTML and CSS, no JavaScript. The stills come from NuKitchen's `public/landing/` (dev branch).
+- `index.html`, `landing/`: the landing page. Plain HTML and CSS, no JavaScript. The stills are the app's own Photo render of its built-in presets, except the check and plan tiles, which are 2x captures that keep the app's labels.
 - `store/index.html`: the storefront (header, hero, four cabinet lines, the "Design Your Kitchen" section, a cart drawer).
 - `store/nukitchen-embed.js`: the file a retailer would paste. `NuKitchen.mount('#el', { retailer, appUrl, catalog, onAddToCart })` mounts the designer in an iframe and passes messages both ways with `postMessage`. The protocol is documented at the top of the file.
 
