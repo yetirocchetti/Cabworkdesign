@@ -32,6 +32,7 @@ body {
   margin: 0; background: var(--bg); color: var(--ink);
   font-family: var(--body); -webkit-font-smoothing: antialiased;
 }
+img { max-width: 100%; }
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 400; line-height: 0.95; letter-spacing: 0.01em; }
@@ -141,7 +142,8 @@ h3 { font-size: clamp(26px, 2.4vw, 36px); line-height: 1; }
   .step { padding: 22px 20px 24px; }
   .step p { font-size: 16px; }
     .pitch { order: 1; padding: 84px 16px 22px; }
-  .poster { order: 2; height: auto; min-height: 0; aspect-ratio: 1 / 1; object-position: 30% 50%; }
+  /* the square is spelled in vw, not aspect-ratio: a flex item's ratio is not honoured by every phone browser */
+  .poster { order: 2; flex: none; width: 100%; height: 100vw; max-height: 520px; min-height: 0; object-position: 30% 50%; }
   h1 { font-size: clamp(38px, 11vw, 56px); }
   .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .tile--big { aspect-ratio: 4 / 3; }
