@@ -13,100 +13,92 @@
   <!-- DEMO SITE. Hollis & Pine is a made-up shop; nothing here is for sale. -->
   <style>
     :root {
-      --ink: #1f2a26;
-      --muted: #5d6b65;
-      --line: #e3e0d8;
-      --paper: #faf8f4;
-      --card: #ffffff;
-      --pine: #2f5d4e;
-      --pine-dark: #234a3e;
-      --brass: #b8893b;
-      --radius: 10px;
-      --wrap: 1120px;
+      --ink: #1f2a26; --muted: #5d6b65; --line: #e3e0d8; --paper: #faf8f4; --card: #ffffff;
+      --pine: #2f5d4e; --pine-dark: #234a3e; --brass: #b8893b; --radius: 10px; --wrap: 1280px;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     a { color: inherit; }
     img, svg { display: block; max-width: 100%; }
-    .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 16px; }
-    h1, h2, h3 { line-height: 1.2; margin: 0 0 .5em; font-family: Georgia, "Times New Roman", serif; font-weight: 600; }
-    h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
-    .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; color: var(--brass); font-weight: 700; margin: 0 0 .5em; }
-    .btn {
-      display: inline-block; padding: .8em 1.4em; border-radius: 999px; border: 0;
-      background: var(--pine); color: #fff; font: inherit; font-weight: 600;
-      text-decoration: none; cursor: pointer;
-    }
+    .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+    h1, h2, h3 { line-height: 1.15; margin: 0 0 .5em; font-family: Georgia, "Times New Roman", serif; font-weight: 600; }
+    h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); }
+    .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; color: var(--brass); font-weight: 700; margin: 0 0 .6em; }
+    .btn { display: inline-block; padding: .85em 1.5em; border-radius: 999px; border: 0; background: var(--pine); color: #fff; font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; }
     .btn:hover { background: var(--pine-dark); }
     .btn.ghost { background: transparent; color: var(--pine); box-shadow: inset 0 0 0 2px var(--pine); }
     .btn.ghost:hover { background: var(--pine); color: #fff; }
 
-    /* Demo ribbon */
-    .demo-bar { background: #fff4d6; color: #6b4e12; font-size: .85rem; text-align: center; padding: 6px 16px; }
+    /* Promo strip */
+    .promo { background: var(--pine-dark); color: #e6efe9; font-size: .85rem; }
+    .promo .wrap { display: flex; justify-content: space-between; gap: 16px; padding-top: 7px; padding-bottom: 7px; }
+    .promo a { color: #e0b45f; text-decoration: none; font-weight: 600; white-space: nowrap; }
+    .promo span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     /* Header */
     header { background: var(--card); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 20; }
-    .head { display: flex; align-items: center; gap: 24px; height: 64px; }
-    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: Georgia, serif; font-size: 1.2rem; font-weight: 700; white-space: nowrap; }
-    .logo-mark { width: 30px; height: 30px; }
-    nav { display: flex; gap: 22px; margin-left: auto; }
-    nav a { text-decoration: none; color: var(--muted); font-weight: 500; }
+    .head { display: flex; align-items: center; gap: 28px; height: 72px; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: Georgia, serif; font-size: 1.35rem; font-weight: 700; white-space: nowrap; }
+    .logo-mark { width: 32px; height: 32px; }
+    nav { display: flex; gap: 26px; margin-left: auto; }
+    nav a { text-decoration: none; color: var(--muted); font-weight: 500; white-space: nowrap; }
     nav a:hover { color: var(--ink); }
     nav a.hot { color: var(--pine); font-weight: 700; }
-    .cart-btn { background: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font: inherit; cursor: pointer; white-space: nowrap; }
+    .cart-btn { background: none; border: 1px solid var(--line); border-radius: 999px; padding: 7px 16px; font: inherit; cursor: pointer; white-space: nowrap; }
     .cart-count { display: inline-block; min-width: 1.5em; padding: 0 .4em; margin-left: 4px; border-radius: 999px; background: var(--pine); color: #fff; font-size: .8rem; text-align: center; }
-    @media (max-width: 760px) {
-      .head { height: auto; flex-wrap: wrap; padding: 10px 0; gap: 10px; }
-      nav { order: 3; width: 100%; margin: 0; gap: 16px; overflow-x: auto; padding-bottom: 2px; font-size: .92rem; }
-      .cart-btn { margin-left: auto; }
-    }
 
-    /* Hero */
-    .hero { background: linear-gradient(120deg, #e9efe9 0%, #f5efe3 100%); border-bottom: 1px solid var(--line); }
-    .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: center; padding: 64px 16px; }
-    .hero h1 { font-size: clamp(2rem, 5vw, 3.1rem); }
-    .hero p.lead { font-size: 1.12rem; color: var(--muted); max-width: 34em; }
-    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin: 24px 0 18px; }
-    .perks { display: flex; flex-wrap: wrap; gap: 8px 20px; padding: 0; margin: 0; list-style: none; font-size: .92rem; color: var(--muted); }
-    .perks li::before { content: "✓ "; color: var(--pine); font-weight: 700; }
-    .hero-art { border-radius: 14px; overflow: hidden; box-shadow: 0 20px 40px -20px rgba(31,42,38,.35); }
-    @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; padding: 40px 16px; } }
+    /* Hero: words on paper, a real kitchen beside them */
+    .hero { display: grid; grid-template-columns: minmax(0, 46%) minmax(0, 54%); background: #f1ede4; border-bottom: 1px solid var(--line); }
+    .hero-copy { align-self: center; justify-self: end; width: 100%; max-width: 590px; padding: 56px 48px 56px 24px; }
+    .hero h1 { font-size: clamp(2.2rem, 4.4vw, 3.6rem); }
+    .hero p.lead { font-size: 1.15rem; color: var(--muted); max-width: 30em; margin: 0; }
+    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; margin: 28px 0 0; }
+    .hero-photo { width: 100%; height: 100%; min-height: 520px; max-height: 680px; object-fit: cover; }
 
-    section { padding: 64px 0; }
-    .section-head { max-width: 40em; margin-bottom: 28px; }
+    /* Perks */
+    .perks { background: var(--card); border-bottom: 1px solid var(--line); }
+    .perks ul { list-style: none; margin: 0 auto; padding-top: 18px; padding-bottom: 18px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .perks li { font-size: .92rem; color: var(--muted); }
+    .perks strong { display: block; color: var(--ink); font-size: 1rem; }
+
+    section { padding: 76px 0; }
+    .section-head { max-width: 42em; margin-bottom: 30px; }
     .section-head p { color: var(--muted); margin: 0; }
 
+    /* Shop by room */
+    .rooms { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .room { position: relative; display: block; border-radius: var(--radius); overflow: hidden; text-decoration: none; color: #fff; }
+    .room img { width: 100%; aspect-ratio: 6 / 7; object-fit: cover; transition: transform .6s; }
+    .room:hover img { transform: scale(1.04); }
+    .room span { position: absolute; left: 0; right: 0; bottom: 0; padding: 60px 22px 20px; background: linear-gradient(to top, rgba(20,26,23,.78), transparent); font: 600 1.45rem/1.2 Georgia, serif; }
+    .room small { display: block; font: 500 .9rem/1.4 system-ui, sans-serif; opacity: .9; }
+
     /* Cabinet lines */
-    .lines { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+    .tint { background: #f1ede4; }
+    .lines { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
     .line-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
-    .line-card .swatch { aspect-ratio: 4 / 3; display: grid; place-items: center; }
-    .line-card .swatch svg { height: 78%; width: auto; filter: drop-shadow(0 6px 8px rgba(0,0,0,.18)); }
-    .line-body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
-    .line-body h3 { font-size: 1.2rem; margin: 0; }
+    .line-card .swatch { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+    .line-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .line-body h3 { font-size: 1.25rem; margin: 0; }
     .tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
     .tag { font-size: .75rem; padding: 2px 8px; border-radius: 999px; background: #f0ede6; color: var(--muted); }
-    .line-body p { margin: 4px 0 0; color: var(--muted); font-size: .92rem; }
-    .price { margin-top: auto; padding-top: 12px; display: flex; justify-content: space-between; align-items: baseline; border-top: 1px dashed var(--line); }
-    .price strong { font-size: 1.15rem; }
+    .line-body p { margin: 2px 0 0; color: var(--muted); font-size: .93rem; }
+    .price { margin-top: auto; padding-top: 14px; display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--line); }
+    .price strong { font-size: 1.2rem; }
     .price small { color: var(--muted); }
+    .price .r { text-align: right; }
 
     /* Design section */
     .design { background: var(--ink); color: #eef1ee; }
     .design .eyebrow { color: #e0b45f; }
     .design .section-head p { color: #b9c4bf; }
-    .design-grid { display: grid; grid-template-columns: 1fr 300px; gap: 28px; align-items: start; }
-    .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; counter-reset: s; }
+    .design-grid { display: grid; grid-template-columns: 1fr 320px; gap: 36px; align-items: start; }
+    .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; counter-reset: s; }
     .steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 10px; font-size: .95rem; color: #cfd8d4; }
     .steps li::before { content: counter(s); width: 30px; height: 30px; border-radius: 50%; background: #e0b45f; color: var(--ink); font-weight: 700; display: grid; place-items: center; }
     .steps strong { color: #fff; display: block; }
-    .aside-note { margin-top: 22px; font-size: .85rem; color: #93a29b; }
-    @media (max-width: 900px) { .design-grid { grid-template-columns: 1fr; } }
+    .aside-note { margin-top: 24px; font-size: .85rem; color: #93a29b; }
 
     /* NuKitchen host + preview placeholder (styles for nukitchen-embed.js) */
     .nk-host { border-radius: 14px; overflow: hidden; background: #111614; min-height: 460px; box-shadow: 0 0 0 1px #34413c; }
@@ -123,14 +115,54 @@
     .nk-ph-btn:hover { background: #ecc679; }
     .nk-ph-log { font: .8rem/1.4 ui-monospace, Consolas, monospace; color: #8fd3b5; }
 
-    /* Why us */
-    .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-    .why div { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
-    .why h3 { font-size: 1.05rem; }
-    .why p { margin: 0; color: var(--muted); font-size: .92rem; }
+    /* Why RTA: a photo and four plain facts */
+    .why { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+    .why img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); }
+    .facts { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 22px 28px; }
+    .facts h3 { font-size: 1.08rem; margin: 0 0 4px; }
+    .facts p { margin: 0; color: var(--muted); font-size: .93rem; }
 
-    footer { border-top: 1px solid var(--line); padding: 32px 0; color: var(--muted); font-size: .88rem; }
-    .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+    /* Finished kitchens */
+    .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .gallery img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); }
+
+    /* Footer */
+    footer { background: var(--ink); color: #b9c4bf; font-size: .92rem; }
+    .foot { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 32px; padding-top: 52px; padding-bottom: 36px; }
+    .foot h4 { margin: 0 0 10px; color: #fff; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; }
+    .foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+    .foot a { text-decoration: none; }
+    .foot a:hover { color: #fff; }
+    .foot .brand { font: 700 1.3rem Georgia, serif; color: #fff; margin: 0 0 8px; }
+    .foot p { margin: 0; max-width: 26em; }
+    .demo-note { border-top: 1px solid #34413c; padding-top: 16px; padding-bottom: 20px; font-size: .82rem; color: #93a29b; }
+    .demo-note a { color: #e0b45f; }
+
+    @media (max-width: 1000px) {
+      .lines { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .design-grid { grid-template-columns: 1fr; }
+      .why { grid-template-columns: 1fr; gap: 28px; }
+      .foot { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 760px) {
+      .wrap { padding: 0 16px; }
+      section { padding: 52px 0; }
+      .promo a { display: none; }
+      .promo .wrap { justify-content: center; }
+      .head { height: auto; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; gap: 10px; }
+      nav { order: 3; width: 100%; margin: 0; gap: 18px; overflow-x: auto; scrollbar-width: none; font-size: .92rem; }
+      .cart-btn { margin-left: auto; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-copy { max-width: none; padding: 36px 16px 32px; }
+      .hero-photo { min-height: 0; aspect-ratio: 4 / 3; }
+      .perks ul { grid-template-columns: 1fr 1fr; gap: 14px 16px; }
+      .rooms { grid-template-columns: 1fr; gap: 12px; }
+      .room img { aspect-ratio: 16 / 10; }
+      .lines { grid-template-columns: 1fr; }
+      .facts { grid-template-columns: 1fr; gap: 16px; }
+      .gallery { grid-template-columns: 1fr; gap: 12px; }
+      .foot { grid-template-columns: 1fr 1fr; gap: 24px; }
+    }
 
     /* Cart drawer */
     .drawer-bg { position: fixed; inset: 0; background: rgba(15,20,18,.45); opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 40; }
@@ -152,7 +184,7 @@
   </style>
 </head>
 <body>
-  <div class="demo-bar">Demo storefront — Hollis &amp; Pine is a fictional shop built to show how the SUPERULTRAKITCHEN designer embeds on a retailer’s site. Nothing here is for sale. <a href="../">Back to SUPERULTRAKITCHEN</a></div>
+  <div class="promo"><div class="wrap"><span>Free shipping on orders over $2,500 · Free door samples</span><a href="tel:5550142290">(555) 014-2290</a></div></div>
 
   <header>
     <div class="wrap head">
@@ -172,64 +204,42 @@
 
   <main id="top">
     <div class="hero">
-      <div class="wrap hero-grid">
-        <div>
-          <p class="eyebrow">Ready-to-assemble kitchen cabinets</p>
-          <h1>Solid-wood cabinets, shipped flat, built to last.</h1>
-          <p class="lead">Plywood boxes, dovetail drawers and soft-close everything — at up to 50% below showroom prices. Design your kitchen in 3D, send it to the cart, and it ships in 3–5 business days.</p>
-          <div class="hero-cta">
-            <a class="btn" href="#design">Design Your Kitchen in 3D</a>
-            <a class="btn ghost" href="#lines">Shop Cabinet Lines</a>
-          </div>
-          <ul class="perks">
-            <li>Free shipping over $2,500</li>
-            <li>Free door samples</li>
-            <li>Lifetime box warranty</li>
-          </ul>
-        </div>
-        <div class="hero-art" aria-hidden="true">
-          <!-- Illustrated kitchen elevation -->
-          <svg viewBox="0 0 560 380">
-            <rect width="560" height="380" fill="#f3efe6"/>
-            <rect y="300" width="560" height="80" fill="#d9cdb6"/>
-            <rect x="0" y="170" width="560" height="10" fill="#e7e1d4"/>
-            <!-- wall cabinets -->
-            <g fill="#fbfaf7" stroke="#c9c2b3" stroke-width="2">
-              <rect x="30" y="30" width="110" height="120"/><rect x="140" y="30" width="110" height="120"/>
-              <rect x="350" y="30" width="90" height="120"/><rect x="440" y="30" width="90" height="120"/>
-            </g>
-            <g fill="none" stroke="#ddd6c7" stroke-width="2">
-              <rect x="40" y="40" width="90" height="100"/><rect x="150" y="40" width="90" height="100"/>
-              <rect x="360" y="40" width="70" height="100"/><rect x="450" y="40" width="70" height="100"/>
-            </g>
-            <!-- window -->
-            <rect x="268" y="40" width="64" height="100" fill="#cfe2e6" stroke="#c9c2b3" stroke-width="4"/>
-            <!-- counter -->
-            <rect x="20" y="196" width="520" height="12" fill="#6e7a76"/>
-            <!-- base cabinets -->
-            <g fill="#2f5d4e" stroke="#244a3e" stroke-width="2">
-              <rect x="30" y="208" width="100" height="92"/><rect x="130" y="208" width="100" height="92"/>
-              <rect x="230" y="208" width="120" height="92"/><rect x="350" y="208" width="90" height="92"/>
-              <rect x="440" y="208" width="90" height="92"/>
-            </g>
-            <g fill="none" stroke="#3f7464" stroke-width="2">
-              <rect x="40" y="218" width="80" height="72"/><rect x="140" y="218" width="80" height="72"/>
-              <rect x="240" y="218" width="100" height="72"/><rect x="360" y="218" width="70" height="20"/>
-              <rect x="360" y="244" width="70" height="20"/><rect x="360" y="270" width="70" height="20"/>
-              <rect x="450" y="218" width="70" height="72"/>
-            </g>
-            <g fill="#e0b45f">
-              <rect x="114" y="230" width="3" height="18"/><rect x="143" y="230" width="3" height="18"/>
-              <rect x="388" y="226" width="14" height="3"/><rect x="388" y="252" width="14" height="3"/><rect x="388" y="278" width="14" height="3"/>
-              <rect x="508" y="230" width="3" height="18"/>
-            </g>
-            <path d="M292 196 v-20 q0-10 10-10 h10" stroke="#8b958f" stroke-width="4" fill="none"/>
-          </svg>
+      <div class="hero-copy">
+        <p class="eyebrow">Ready-to-assemble kitchen cabinets</p>
+        <h1>The kitchen you want, at half the showroom price.</h1>
+        <p class="lead">Plywood boxes, dovetail drawers and soft-close everything. Design your kitchen in 3D, send it to the cart, and it ships in 3 to 5 business days.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#design">Design Your Kitchen in 3D</a>
+          <a class="btn ghost" href="#lines">Shop Cabinet Lines</a>
         </div>
       </div>
+      <img class="hero-photo" src="photos/hero.webp" width="1600" height="1200" alt="A white shaker kitchen with a wood island and a marble counter" fetchpriority="high">
     </div>
 
-    <section id="lines">
+    <div class="perks">
+      <ul class="wrap">
+        <li><strong>Free shipping</strong>On orders over $2,500</li>
+        <li><strong>Free door samples</strong>See the finish at home</li>
+        <li><strong>Ships in 3 to 5 days</strong>Every line in stock</li>
+        <li><strong>Lifetime box warranty</strong>On every cabinet</li>
+      </ul>
+    </div>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Shop by room</p>
+          <h2>Cabinets for the whole house.</h2>
+        </div>
+        <div class="rooms">
+          <a class="room" href="#lines"><img src="photos/room-kitchen.webp" alt="" loading="lazy"><span>Kitchen<small>Base, wall and tall cabinets</small></span></a>
+          <a class="room" href="#lines"><img src="photos/room-bath.webp" alt="" loading="lazy"><span>Bath<small>Vanities and linen towers</small></span></a>
+          <a class="room" href="#lines"><img src="photos/room-pantry.webp" alt="" loading="lazy"><span>Pantry &amp; storage<small>Tall pantries and utility cabinets</small></span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="lines" class="tint">
       <div class="wrap">
         <div class="section-head">
           <p class="eyebrow">Our cabinet lines</p>
@@ -244,13 +254,12 @@
       <div class="wrap">
         <div class="section-head">
           <p class="eyebrow">Free 3D kitchen designer</p>
-          <h2>Design your kitchen — then buy the exact parts list.</h2>
+          <h2>Design your kitchen, then buy the exact parts list.</h2>
           <p>Draw your room, place cabinets from any Hollis &amp; Pine line, and see it in 3D. When it looks right, one click sends every cabinet, filler and toe kick to your cart.</p>
         </div>
         <div class="design-grid">
-          <!-- ▼ THE EMBED. A retailer installs the designer with this div + the script below. -->
+          <!-- THE EMBED. A retailer installs the designer with this div + the script below. -->
           <div id="nk-designer"></div>
-          <!-- ▲ -->
           <div>
             <ol class="steps">
               <li><div><strong>Draw your room</strong>Walls, windows and doors in inches.</div></li>
@@ -265,16 +274,31 @@
     </section>
 
     <section id="why">
+      <div class="wrap why">
+        <img src="photos/install.webp" alt="Two installers fitting cabinet boxes in a kitchen" loading="lazy">
+        <div>
+          <p class="eyebrow">Why RTA</p>
+          <h2>Same cabinets. No showroom markup.</h2>
+          <ul class="facts">
+            <li><h3>Assembles in 15 minutes</h3><p>Cam-lock boxes, pre-drilled hardware and a video guide for every cabinet.</p></li>
+            <li><h3>Ships in 3 to 5 days</h3><p>Packed flat, insured, and delivered to your curb. No 10-week wait.</p></li>
+            <li><h3>Real wood</h3><p>Solid hardwood doors and face frames. No particleboard, ever.</p></li>
+            <li><h3>Contractor pricing</h3><p>Trade accounts get an extra 10% off and a dedicated rep.</p></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="tint">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Why RTA</p>
-          <h2>Showroom quality, without the showroom markup.</h2>
+          <p class="eyebrow">Finished kitchens</p>
+          <h2>Built with Hollis &amp; Pine.</h2>
         </div>
-        <div class="why">
-          <div><h3>Assembles in 15 minutes</h3><p>Cam-lock boxes, pre-drilled hardware and a video guide for every cabinet.</p></div>
-          <div><h3>Ships in 3–5 days</h3><p>Packed flat, insured, and delivered to your curb — no 10-week wait.</p></div>
-          <div><h3>Real wood</h3><p>Solid hardwood doors and face frames. No particleboard, ever.</p></div>
-          <div><h3>Contractor pricing</h3><p>Trade accounts get an extra 10% off and a dedicated rep.</p></div>
+        <div class="gallery">
+          <img src="photos/g1.webp" alt="White cabinets over a butcher-block counter and subway tile" loading="lazy">
+          <img src="photos/g2.webp" alt="A long run of grey-blue shaker cabinets under pendant lights" loading="lazy">
+          <img src="photos/g3.webp" alt="A walnut and white kitchen with a long island" loading="lazy">
         </div>
       </div>
     </section>
@@ -282,9 +306,12 @@
 
   <footer id="contact">
     <div class="wrap foot">
-      <div><strong>Hollis &amp; Pine Cabinet Supply</strong> · Demo storefront for the SUPERULTRAKITCHEN embed</div>
-      <div>(555) 014-2290 · hello@hollisandpine.example</div>
+      <div><p class="brand">Hollis &amp; Pine</p><p>Ready-to-assemble cabinets, shipped flat from our warehouse to your door.</p></div>
+      <div><h4>Shop</h4><ul><li><a href="#lines">Cabinet lines</a></li><li><a href="#design">3D kitchen designer</a></li><li><a href="#lines">Door samples</a></li></ul></div>
+      <div><h4>Help</h4><ul><li><a href="#why">Why RTA</a></li><li><a href="#why">Assembly guides</a></li><li><a href="#why">Trade accounts</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li>(555) 014-2290</li><li>hello@hollisandpine.example</li><li>Mon to Fri, 8 to 6</li></ul></div>
     </div>
+    <div class="wrap demo-note">Demo store. Hollis &amp; Pine is a made-up shop that shows the SUPERULTRAKITCHEN designer on a retailer's site; nothing here is for sale. <a href="../">Back to SUPERULTRAKITCHEN</a></div>
   </footer>
 
   <!-- Cart drawer -->
@@ -300,6 +327,6 @@
 
   <script src="nukitchen-embed.js"></script>
   <script src="nukitchen-parts.js"></script>
-  <script src="store.js"></script>
+  <script src="store.js?v=2"></script>
 </body>
 </html>

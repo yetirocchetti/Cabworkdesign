@@ -17,13 +17,13 @@ var NAMES = {
 };
 var LINES = [
   { id: 'AS', name: 'Aspen White Shaker', door: 'shaker', finish: 'Painted white', factor: 1.00,
-    construction: 'Face frame', blurb: 'Our best seller. A clean five-piece shaker door in a durable catalyzed white.', color: '#f7f5ef', bg: '#e8e4da' },
-  { id: 'HN', name: 'Harbor Navy Shaker', door: 'shaker', finish: 'Painted navy', factor: 1.08,
-    construction: 'Face frame', blurb: 'Deep navy shaker for islands and statement walls. Pairs with brass pulls.', color: '#2c3d57', bg: '#d7dce4' },
-  { id: 'SC', name: 'Sedona Cinnamon', door: 'raised', finish: 'Maple, cinnamon glaze', factor: 1.05,
-    construction: 'Face frame', blurb: 'Traditional cathedral raised-panel door in stained solid maple with a hand-wiped glaze.', color: '#9a5a33', bg: '#eadfd3' },
-  { id: 'LG', name: 'Linea Graphite Slab', door: 'slab', finish: 'Matte graphite', factor: 0.93,
-    construction: 'Frameless (European)', blurb: 'Flat slab doors, full-overlay frameless boxes — modern and handle-friendly.', color: '#4a4d50', bg: '#dfe0df' }
+    construction: 'Face frame', blurb: 'Our best seller. A clean five-piece shaker door in a durable catalyzed white.' },
+  { id: 'HN', name: 'Harbor Blue Shaker', door: 'shaker', finish: 'Painted slate blue', factor: 1.08,
+    construction: 'Face frame', blurb: 'A soft slate blue for islands and statement walls. Pairs with black pulls.' },
+  { id: 'SC', name: 'Sedona Natural Oak', door: 'shaker', finish: 'Oak, clear coat', factor: 1.05,
+    construction: 'Face frame', blurb: 'Solid oak shaker doors under a clear matte coat, so the grain does the talking.' },
+  { id: 'LG', name: 'Linea Graphite', door: 'shaker', finish: 'Matte graphite', factor: 0.93,
+    construction: 'Frameless (European)', blurb: 'Near-black shaker on full-overlay frameless boxes. Made for brass hardware.' }
 ];
 // …and every other part NuKitchen's designer can put in a cart (nukitchen-parts.js, loaded
 // first), so a design's cart is the whole design.
@@ -48,26 +48,18 @@ var CATALOG = {
 };
 
 // ---------- Render cabinet lines ----------
-function doorSvg(style, color) {
-  var stroke = 'rgba(0,0,0,.18)', hi = 'rgba(255,255,255,.18)';
-  var inner = '';
-  if (style === 'shaker') inner = '<rect x="14" y="14" width="72" height="132" fill="none" stroke="' + stroke + '" stroke-width="3"/><rect x="16" y="16" width="68" height="128" fill="none" stroke="' + hi + '" stroke-width="1"/>';
-  if (style === 'raised') inner = '<path d="M14 40 Q50 14 86 40 V146 H14 Z" fill="none" stroke="' + stroke + '" stroke-width="3"/><path d="M24 50 Q50 30 76 50 V136 H24 Z" fill="' + hi + '" stroke="' + stroke + '" stroke-width="1.5"/>';
-  return '<svg viewBox="0 0 100 160" aria-hidden="true"><rect width="100" height="160" rx="2" fill="' + color + '"/>' + inner +
-    '<rect x="80" y="70" width="4" height="22" rx="2" fill="#b8893b"/></svg>';
-}
 function money(n) { return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 function moneyShort(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
 var DOOR_LABEL = { shaker: 'Shaker', raised: 'Raised panel', slab: 'Flat slab' };
 
 document.getElementById('lineGrid').innerHTML = LINES.map(function (l) {
   return '<article class="line-card">' +
-    '<div class="swatch" style="background:' + l.bg + '">' + doorSvg(l.door, l.color) + '</div>' +
+    '<img class="swatch" src="photos/line-' + l.id.toLowerCase() + '.webp" alt="' + l.name + ' cabinets" loading="lazy">' +
     '<div class="line-body"><h3>' + l.name + '</h3>' +
     '<div class="tag-row"><span class="tag">' + DOOR_LABEL[l.door] + '</span><span class="tag">' + l.finish + '</span><span class="tag">' + l.construction + '</span></div>' +
     '<p>' + l.blurb + '</p>' +
     '<div class="price"><div><small>10×10 kitchen from</small><br><strong>' + moneyShort(tenByTen(l)) + '</strong></div>' +
-    '<div style="text-align:right"><small>30" base</small><br><strong>' + money(price(l, 'B30')) + '</strong></div></div>' +
+    '<div class="r"><small>30" base</small><br><strong>' + money(price(l, 'B30')) + '</strong></div></div>' +
     '</div></article>';
 }).join('');
 
