@@ -71,6 +71,8 @@
     .perks strong { display: block; color: var(--ink); font-size: 1rem; }
 
     section { padding: 76px 0; }
+    /* a link to a section stops below the sticky header, not under it */
+    section[id], footer[id] { scroll-margin-top: 73px; }
     .section-head { max-width: 42em; margin-bottom: 30px; }
     .section-head p { color: var(--muted); margin: 0; }
 
@@ -155,6 +157,8 @@
     @media (max-width: 760px) {
       .wrap { padding: 0 16px; }
       section { padding: 52px 0; }
+      section[id], footer[id] { scroll-margin-top: 96px; }
+      .nk-host { min-height: 0; } /* the launcher picture sets the height; no dark gap under it */
       .promo a { display: none; }
       .promo .wrap { justify-content: center; }
       .head { height: auto; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; gap: 10px; }
