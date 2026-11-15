@@ -22,6 +22,7 @@
   --accent-hover: #ae2f2f;
   --radius: 10px;
   --gutter: clamp(16px, 3vw, 40px);
+  --beat: clamp(44px, 7vh, 72px); /* the space above a section heading, and the same below it */
   --body: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --display: 'Bebas Neue', 'Outfit', sans-serif;
 }
@@ -62,7 +63,7 @@ h3 { font-size: clamp(26px, 2.4vw, 36px); line-height: 1; }
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 16px var(--gutter);
 }
-.logo { font: 400 clamp(25px, 2.4vw, 32px)/1 var(--display); letter-spacing: 0.03em; color: var(--ink); text-decoration: none; }
+.logo { font: 400 clamp(36px, 3.6vw, 56px)/1 var(--display); letter-spacing: 0.03em; color: var(--ink); text-decoration: none; }
 .top nav { display: flex; align-items: center; gap: clamp(12px, 2vw, 26px); padding: 6px 8px 6px 16px; border-radius: 999px; background: rgba(250, 248, 243, 0.86); }
 .link { color: var(--ink); font-size: 15px; font-weight: 600; text-decoration: none; white-space: nowrap; }
 .link:hover { color: var(--accent); }
@@ -73,7 +74,7 @@ h3 { font-size: clamp(26px, 2.4vw, 36px); line-height: 1; }
 .cta { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 22px; margin-top: 26px; }
 
 /* Screen two: how a shop gets it */
-.how { padding: 14vh var(--gutter) 4vh; display: flex; flex-direction: column; align-items: center; gap: 36px; }
+.how { padding: var(--beat) var(--gutter) 0; display: flex; flex-direction: column; align-items: center; gap: var(--beat); }
 /* A store's page with the designer on it: a drawn browser window around the store's launcher picture */
 .site { margin: 0; width: min(900px, 100%); border-radius: 12px; overflow: hidden; background: var(--white); box-shadow: 0 24px 50px -28px rgba(28, 24, 19, 0.5); }
 .site-bar { position: relative; display: flex; justify-content: center; padding: 10px 70px; background: var(--dark); }
@@ -82,12 +83,12 @@ h3 { font-size: clamp(26px, 2.4vw, 36px); line-height: 1; }
 .site-body { position: relative; }
 .site-body img { display: block; width: 100%; height: auto; }
 .site-btn { position: absolute; left: 50%; bottom: 7%; transform: translateX(-50%); padding: 13px 24px; border-radius: 999px; background: var(--accent); color: var(--white); font: 600 16px/1 var(--body); white-space: nowrap; box-shadow: 0 8px 20px -8px rgba(28, 24, 19, 0.6); }
-.steps { list-style: none; margin: 0; padding: 0; width: min(1240px, 100%); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.steps { list-style: none; margin: calc(20px - var(--beat)) 0 0; padding: 0; width: min(1240px, 100%); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 .step { padding: 30px 24px 30px; border-radius: var(--radius); background: var(--white); min-width: 0; }
 .step p, .trade p { margin: 10px 0 0; font-size: 17px; line-height: 1.45; color: var(--ink-soft); }
 
 /* Screen three: the proof mosaic */
-.proof { padding: 14vh var(--gutter) 10vh; display: flex; flex-direction: column; align-items: center; gap: 36px; scroll-margin-top: 0; }
+.proof { padding: var(--beat) var(--gutter) 0; display: flex; flex-direction: column; align-items: center; gap: var(--beat); scroll-margin-top: 0; }
 .tiles {
   list-style: none; margin: 0; padding: 0; width: min(1240px, 100%);
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px;
@@ -103,11 +104,11 @@ h3 { font-size: clamp(26px, 2.4vw, 36px); line-height: 1; }
   color: var(--white); font: 600 16px/1.2 var(--body);
 }
 .tile--big span { padding: 60px 22px 20px; font-size: 22px; }
-.also { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.also { list-style: none; margin: calc(24px - var(--beat)) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 .also li { padding: 9px 16px; border-radius: 999px; background: var(--white); color: var(--ink-soft); font-size: 14px; font-weight: 600; }
 
 /* Screen four: who it is for */
-.who { padding: 4vh var(--gutter) 14vh; display: flex; flex-direction: column; align-items: center; gap: 36px; }
+.who { padding: var(--beat) var(--gutter) calc(var(--beat) * 1.5); display: flex; flex-direction: column; align-items: center; gap: var(--beat); }
 .trades { list-style: none; margin: 0; padding: 0; width: min(1240px, 100%); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 .trade { padding: 24px 22px 26px; border-radius: var(--radius); background: var(--white); border-top: 4px solid var(--accent); }
 
@@ -131,10 +132,8 @@ h3 { font-size: clamp(26px, 2.4vw, 36px); line-height: 1; }
   .hero { display: flex; flex-direction: column; min-height: 0; }
   br.d { display: none; }
   .top nav { display: none; } /* the hero's own button sits right below */
-  /* phones: one even, short gap above each heading */
-  .how { padding: 40px 16px 0; gap: 22px; }
-  .proof { padding: 44px 16px 0; gap: 22px; }
-  .who { padding: 44px 16px 52px; gap: 22px; }
+  :root { --beat: 34px; }
+  .logo { font-size: 36px; }
   .site-btn { padding: 10px 16px; font-size: 13px; bottom: 5%; }
   .site-url { font-size: 12px; }
   .steps { grid-template-columns: 1fr; gap: 10px; }
@@ -144,7 +143,7 @@ h3 { font-size: clamp(26px, 2.4vw, 36px); line-height: 1; }
   .trade p { font-size: 15px; }
   .step { padding: 22px 20px 24px; }
   .step p { font-size: 16px; }
-    .pitch { order: 1; padding: 62px 16px 22px; }
+    .pitch { order: 1; padding: 74px 16px 22px; }
   /* the square is spelled in vw, not aspect-ratio: a flex item's ratio is not honoured by every phone browser */
   .poster { order: 2; flex: none; width: 100%; height: 100vw; max-height: 520px; min-height: 0; object-position: 30% 50%; }
   h1 { font-size: clamp(38px, 11vw, 56px); }
