@@ -63,7 +63,8 @@ h3 { font-size: clamp(26px, 2.4vw, 36px); line-height: 1; }
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 16px var(--gutter);
 }
-.logo { font: 400 clamp(36px, 3.6vw, 56px)/1 var(--display); letter-spacing: 0.03em; color: var(--ink); text-decoration: none; }
+.logo { display: block; line-height: 0; }
+.logo img { display: block; height: clamp(44px, 4.4vw, 64px); width: auto; }
 .top nav { display: flex; align-items: center; gap: clamp(12px, 2vw, 26px); padding: 6px 8px 6px 16px; border-radius: 999px; background: rgba(250, 248, 243, 0.86); }
 .link { color: var(--ink); font-size: 15px; font-weight: 600; text-decoration: none; white-space: nowrap; }
 .link:hover { color: var(--accent); }
@@ -74,7 +75,10 @@ h3 { font-size: clamp(26px, 2.4vw, 36px); line-height: 1; }
 .tags { display: none; } /* the same audience as tags: phones only */
 .cta { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 22px; margin-top: 26px; }
 
-/* Screen two: how a shop gets it */
+/* Screen two: why, and how a contractor uses it */
+.story { width: min(760px, 100%); margin-top: calc(22px - var(--beat)); font-size: clamp(17px, 1.5vw, 21px); line-height: 1.5; color: var(--ink-soft); text-align: center; }
+.story p { margin: 0 0 12px; }
+.story p:last-child { margin: 0; }
 .how { padding: var(--beat) var(--gutter) 0; display: flex; flex-direction: column; align-items: center; gap: var(--beat); }
 /* A store's page with the designer on it: a drawn browser window around the store's launcher picture */
 .site { margin: 0; width: min(900px, 100%); border-radius: 12px; overflow: hidden; background: var(--white); box-shadow: 0 24px 50px -28px rgba(28, 24, 19, 0.5); }
@@ -84,7 +88,7 @@ h3 { font-size: clamp(26px, 2.4vw, 36px); line-height: 1; }
 .site-body { position: relative; }
 .site-body img { display: block; width: 100%; height: auto; }
 .site-btn { position: absolute; left: 50%; bottom: 7%; transform: translateX(-50%); padding: 13px 24px; border-radius: 999px; background: var(--accent); color: var(--white); font: 600 16px/1 var(--body); white-space: nowrap; box-shadow: 0 8px 20px -8px rgba(28, 24, 19, 0.6); }
-.steps { list-style: none; margin: calc(20px - var(--beat)) 0 0; padding: 0; width: min(1240px, 100%); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.steps { list-style: none; margin: calc(28px - var(--beat)) 0 0; padding: 0; width: min(1240px, 100%); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 .step { padding: 30px 24px 30px; border-radius: var(--radius); background: var(--white); min-width: 0; }
 .step p, .trade p { margin: 10px 0 0; font-size: 17px; line-height: 1.45; color: var(--ink-soft); }
 
@@ -108,12 +112,36 @@ h3 { font-size: clamp(26px, 2.4vw, 36px); line-height: 1; }
 .also { list-style: none; margin: calc(24px - var(--beat)) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 .also li { padding: 9px 16px; border-radius: 999px; background: var(--white); color: var(--ink-soft); font-size: 14px; font-weight: 600; }
 
-/* Screen four: who it is for */
+/* The cabinet list: a sample sheet beside what it is good for */
+.list { padding: var(--beat) var(--gutter) 0; display: flex; flex-direction: column; align-items: center; gap: var(--beat); }
+.list-grid { width: min(1240px, 100%); display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+.sheet { margin: 0; padding: 26px 26px 20px; border-radius: var(--radius); background: var(--white); box-shadow: 0 24px 50px -28px rgba(28, 24, 19, 0.5); font-size: 15px; min-width: 0; }
+.sheet figcaption { display: flex; justify-content: space-between; align-items: center; font: 400 30px/1 var(--display); }
+.sheet figcaption span { font: 700 11px/1 var(--body); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); padding: 5px 9px; border-radius: 999px; background: var(--bg); }
+.sheet dl { margin: 14px 0 16px; display: grid; gap: 3px; color: var(--ink-soft); }
+.sheet dl div { display: flex; gap: 6px; }
+.sheet dt { font-weight: 700; color: var(--ink); }
+.sheet dt::after { content: ':'; }
+.sheet dd { margin: 0; }
+.sheet table { width: 100%; border-collapse: collapse; }
+.sheet th { text-align: left; padding: 8px 8px 8px 0; border-bottom: 2px solid var(--ink); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+.sheet td { padding: 8px 8px 8px 0; border-bottom: 1px solid #e5e0d6; color: var(--ink-soft); }
+.sheet td:first-child { font-weight: 700; color: var(--ink); white-space: nowrap; }
+.points { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.points li { padding: 24px 22px 26px; border-radius: var(--radius); background: var(--white); min-width: 0; }
+.points p { margin: 10px 0 0; font-size: 17px; line-height: 1.45; color: var(--ink-soft); }
+
+/* The price, beside the two old ways */
 .who { padding: var(--beat) var(--gutter) calc(var(--beat) * 1.5); display: flex; flex-direction: column; align-items: center; gap: var(--beat); }
 .trades { list-style: none; margin: 0; padding: 0; width: min(1240px, 100%); display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
 .trade { padding: 24px 22px 26px; border-radius: var(--radius); background: var(--white); border-top: 4px solid var(--accent); }
 
-/* Screen five */
+.trades--price { grid-template-columns: repeat(3, minmax(0, 1fr)); width: min(1000px, 100%); }
+.trade--old { border-top-color: var(--dark-line); }
+.trade .amount { font-weight: 700; color: var(--ink); font-size: 19px; }
+.fine { margin: calc(18px - var(--beat)) 0 0; font-size: 13px; color: var(--ink-soft); text-align: center; }
+
+/* The close */
 .close {
   padding: 16vh 16px 18vh; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
   background: var(--dark); color: var(--white);
@@ -126,7 +154,7 @@ h3 { font-size: clamp(26px, 2.4vw, 36px); line-height: 1; }
 }
 .foot a { color: inherit; }
 
-@media (max-width: 1100px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } .trades { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 1100px) { .list-grid { grid-template-columns: 1fr; } .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } .trades { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
 /* Phone */
 @media (max-width: 820px) {
@@ -137,9 +165,9 @@ h3 { font-size: clamp(26px, 2.4vw, 36px); line-height: 1; }
   /* the phone's first screen: a slim name bar, the headline as wide as the screen, one full-width button, then who it is for as tags */
   .top { padding: 16px; justify-content: center; border-bottom: 1px solid rgba(42, 37, 29, 0.12); }
   /* the name as a quiet wordmark in the body face, so only the headline shouts */
-  .logo { font: 600 15px/1 var(--body); letter-spacing: 0.22em; color: var(--ink-soft); }
+  .logo img { height: 34px; }
   .pitch { display: flex; flex-direction: column; text-align: center; }
-  h1 { font-size: min(17.4vw, 84px); line-height: 0.92; }
+  h1 { font-size: min(12.6vw, 84px); line-height: 0.92; }
   .pitch .line { margin-top: 14px; font-size: 18px; line-height: 1.35; }
   .cta { margin-top: 18px; justify-content: center; }
   .cta .btn { min-width: 240px; }
@@ -153,6 +181,13 @@ h3 { font-size: clamp(26px, 2.4vw, 36px); line-height: 1; }
   .trades { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .trade { padding: 16px 14px 18px; }
   .trade:last-child { grid-column: 1 / -1; }
+  .trades--price { grid-template-columns: 1fr; }
+  .points { grid-template-columns: 1fr; gap: 10px; }
+  .points li { padding: 22px 20px 24px; }
+  .points p { font-size: 16px; }
+  .sheet { padding: 18px 14px 12px; font-size: 13.5px; }
+  .sheet th:last-child, .sheet td:last-child { display: none; }
+  .foot { flex-direction: column; align-items: center; text-align: center; }
   .trade h3 { font-size: 23px; }
   .trade p { font-size: 15px; }
   .step { padding: 22px 20px 24px; }
