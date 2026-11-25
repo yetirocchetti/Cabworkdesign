@@ -3,161 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <!-- No scripts on this page, so nothing may run. The designer lives in the app and in store/. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+  <!-- cabworkdesign.com IS the app's animated landing (owner, 2026-11-24): this page only sends the
+       visitor there. The page it replaced is in this repo's history (main at a17ebf2); store/ is untouched. -->
+  <meta http-equiv="refresh" content="0; url=https://nukitchen-3d.vercel.app/landing">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Cabwork: kitchen design software for contractors</title>
   <meta name="description" content="Design a kitchen in your browser, hand your customer 3D pictures, and send a cabinet list to any shop. Built for contractors. In English and Spanish.">
-  <meta name="theme-color" content="#faf8f3">
+  <meta name="theme-color" content="#ebe6dd">
   <link rel="canonical" href="https://cabworkdesign.com/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://cabworkdesign.com/">
   <meta property="og:title" content="Cabwork: kitchen design software for contractors">
-  <meta property="og:description" content="Design the kitchen. Show it in 3D. Get the job. No waiting on the cabinet shop.">
+  <meta property="og:description" content="Design the kitchen. Get the job. No waiting on the cabinet shop.">
   <meta property="og:image" content="https://cabworkdesign.com/landing/share.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="Cabwork">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preload" href="landing/fonts/bebasneue-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="landing/landing.css?v=9">
+  <style>html { background: #ebe6dd; } body { margin: 0; min-height: 100vh; display: grid; place-items: center; font: 16px/1.4 system-ui, sans-serif; } a { color: #1c1a17; }</style>
 </head>
 <body>
-  <section class="hero" aria-labelledby="h-hero">
-    <img class="poster" src="landing/hero.webp" srcset="landing/hero-1400.webp 1400w, landing/hero.webp 3000w" sizes="(max-width: 820px) 100vw, 1800px" width="3000" height="2489" alt="A white kitchen with a dark marble island, designed in Cabwork" fetchpriority="high">
-
-    <header class="top">
-      <a class="logo" href="./"><img src="landing/cabwork-logo.svg" width="2412" height="806" alt="Cabwork Design"></a>
-      <nav aria-label="Main">
-        <a class="link" href="#how">How it works</a>
-        <a class="link" href="#list">Cabinet list</a>
-        <a class="link" href="#price">Price</a>
-        <a class="btn" href="https://nukitchen-3d.vercel.app">Open Cabwork</a>
-      </nav>
-    </header>
-
-    <div class="pitch">
-      <p class="kicker">Kitchen design software for contractors</p>
-      <ul class="tags"><li>Contractors</li><li>Remodelers</li><li>Installers</li></ul>
-      <h1 id="h-hero">Design the kitchen.<br>Show it in 3D.<br><em>Get the job.</em></h1>
-      <p class="line">Without calling the cabinet shop and waiting.</p>
-      <div class="cta">
-        <a class="btn btn--big" href="https://nukitchen-3d.vercel.app">Open Cabwork</a>
-        <a class="link" href="#how">How it works</a>
-      </div>
-    </div>
-  </section>
-
-  <main>
-    <section class="how" id="how" aria-labelledby="h-how">
-      <h2 id="h-how">Stop waiting on the cabinet shop.</h2>
-      <div class="story">
-        <p>I used to work at a cabinet shop. Contractors called all day asking for a design, a 3D picture, a cabinet list. The shop had the software, so the shop was the gatekeeper, and you waited.</p>
-        <p>That software is slow, dated and priced for showrooms. Cabwork does the same job in your browser, built so you can do it yourself.</p>
-      </div>
-      <ul class="steps">
-        <li class="step">
-          <h3>Draw the room</h3>
-          <p>Pick a room shape or type in your tape-measure numbers. Add the doors and windows.</p>
-        </li>
-        <li class="step">
-          <h3>One click lays it out</h3>
-          <p>Quick generate fills the room with a kitchen. Move, swap or delete anything you don't like.</p>
-        </li>
-        <li class="step">
-          <h3>Show the customer</h3>
-          <p>Save 3D pictures of their kitchen for the bid. Offering 3D design is something you can advertise.</p>
-        </li>
-        <li class="step">
-          <h3>Send the cabinet list</h3>
-          <p>Print it or export it to Excel, and send it to as many shops as you like.</p>
-        </li>
-      </ul>
-    </section>
-
-    <section class="proof" id="proof" aria-labelledby="h-proof">
-      <h2 id="h-proof">What you can show a customer.</h2>
-      <ul class="tiles">
-        <li class="tile tile--big"><img src="landing/tile-whole.webp" alt="" loading="lazy"><span>3D pictures of their kitchen</span></li>
-        <li class="tile"><img src="landing/tile-doors.webp" alt="" loading="lazy"><span>Door styles and finishes</span></li>
-        <li class="tile"><img src="landing/tile-check.webp" alt="" loading="lazy"><span>Checks every clearance</span></li>
-        <li class="tile"><img src="landing/tile-walk.webp" alt="" loading="lazy"><span>Walk through it</span></li>
-        <li class="tile"><img src="landing/tile-plan.webp" alt="" loading="lazy"><span>Plans with every dimension</span></li>
-        <li class="tile"><img src="landing/tile-house.webp" alt="" loading="lazy"><span>Whole houses</span></li>
-      </ul>
-      <ul class="also">
-        <li>Runs in your browser</li>
-        <li>Nothing to install</li>
-        <li>English &amp; Spanish</li>
-        <li>Print or Excel</li>
-      </ul>
-    </section>
-
-    <section class="list" id="list" aria-labelledby="h-list">
-      <h2 id="h-list">A cabinet list any shop can quote.</h2>
-      <div class="list-grid">
-        <figure class="sheet" aria-label="A sample cabinet list">
-          <figcaption>Cabinet list <span>Sample</span></figcaption>
-          <dl>
-            <div><dt>Construction</dt><dd>Framed</dd></div>
-            <div><dt>Door style</dt><dd>Shaker</dd></div>
-            <div><dt>Finish</dt><dd>White base, navy wall</dd></div>
-            <div><dt>Hardware</dt><dd>Bar pull, matte black</dd></div>
-            <div><dt>Crown</dt><dd>None</dd></div>
-          </dl>
-          <table>
-            <thead><tr><th>SKU</th><th>Description</th><th>Qty</th><th>Notes</th></tr></thead>
-            <tbody>
-              <tr><td>B24</td><td>Base cabinet 24"</td><td>2</td><td></td></tr>
-              <tr><td>3DB30</td><td>Drawer base 30"</td><td>2</td><td></td></tr>
-              <tr><td>SB36</td><td>Sink base 36"</td><td>1</td><td>Farm sink</td></tr>
-              <tr><td>LS36</td><td>Lazy susan 36"</td><td>2</td><td></td></tr>
-              <tr><td>W3630B</td><td>Wall cabinet 36" × 30"</td><td>2</td><td></td></tr>
-              <tr><td>WDC2430</td><td>Wall diagonal corner 24" × 30"</td><td>2</td><td>Glass doors</td></tr>
-            </tbody>
-          </table>
-        </figure>
-        <ul class="points">
-          <li><h3>No prices, no waiting</h3><p>The list comes straight off your design: SKU, description, quantity and your notes, with the construction, door style, finish, hardware and crown on top.</p></li>
-          <li><h3>Shop it around</h3><p>Send the same list to several cabinet shops and compare what comes back.</p></li>
-          <li><h3>En español también</h3><p>The whole program is in Spanish, with a guided tutorial that builds a kitchen step by step.</p></li>
-          <li><h3>Keep your kitchens</h3><p>Each job saves in your browser and as a project file you can reopen. Saving to an account is coming.</p></li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="who" id="price" aria-labelledby="h-price">
-      <h2 id="h-price">Showroom-grade design. Without the showroom price.</h2>
-      <ul class="trades trades--price">
-        <li class="trade trade--old">
-          <h3>Showroom software</h3>
-          <p class="amount">$2,395 to $2,495 a year</p>
-          <p>ProKitchen and Design Flex (formerly 2020 Design Live), with manufacturer catalogs. Billed by the year.</p>
-        </li>
-        <li class="trade trade--old">
-          <h3>Calling the shop</h3>
-          <p class="amount">Free, when they get to it</p>
-          <p>You wait for the design, the 3D picture and the list, and you get one shop's answer.</p>
-        </li>
-        <li class="trade">
-          <h3>Cabwork</h3>
-          <p class="amount">A fraction of the cost</p>
-          <p>3D pictures, dimensioned plans, clearance checks and a cabinet list, in minutes, on your own schedule. Priced for a contractor, not a showroom. Early access, by password for now.</p>
-        </li>
-      </ul>
-      <p class="fine">Competitor prices are list prices from each company's own pricing page, November 2026.</p>
-    </section>
-
-    <section class="close" aria-labelledby="h-close">
-      <h2 id="h-close">Try it on your next kitchen.</h2>
-      <p class="line">Draw the room, hit Quick generate, and see what you get.</p>
-      <a class="btn btn--big" href="https://nukitchen-3d.vercel.app">Open Cabwork</a>
-    </section>
-  </main>
-
-  <footer class="foot">
-    <span>Cabwork Design</span>
-    <a href="store/">Own a cabinet shop? See Cabwork on a store's website</a>
-  </footer>
+  <a href="https://nukitchen-3d.vercel.app/landing">Cabwork</a>
 </body>
 </html>
