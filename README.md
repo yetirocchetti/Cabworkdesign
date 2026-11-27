@@ -1,5 +1,7 @@
 # Cabworkdesign
 
+**2026-11-27: the site is behind a password.** Cabwork is now Kick & Crown, at [kickandcrown.app](https://kickandcrown.app). `index.html` is the gate (`gate.js`: the app's own gate password, kept as its SHA-256, and a one-day cookie); `store/` sends a visitor without the cookie back to it. A curtain against passers-by and crawlers, not real security.
+
 [cabworkdesign.com](https://cabworkdesign.com) is the landing page for Cabwork, the 3D kitchen designer, pitched to contractors (since 2026-11-24): design the kitchen yourself, show the customer 3D pictures, send a cabinet list to any shop. Its main button opens the app at https://nukitchen-3d.vercel.app. **Hollis & Pine Cabinet Supply**, a made-up RTA cabinet shop, stays under `/store/` as the secondary "for cabinet shops" page: the live demo of the designer on a shop's own website, linked from the landing page's footer.
 
 - `index.html`, `landing/`: the landing page. Plain HTML and CSS, no JavaScript. The stills are the app's own Photo render of its built-in presets, except the check and plan tiles, which are 2x captures that keep the app's labels.
